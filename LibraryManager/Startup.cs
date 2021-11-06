@@ -1,10 +1,14 @@
+using LibraryManager.DAO;
+using LibraryManager.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace LibraryManager
 {
@@ -22,12 +26,29 @@ namespace LibraryManager
         {
 
             services.AddControllersWithViews();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EFCore_1", Version = "v1" });
+            });
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<LibraryManagerDbContext>(options => options.UseSqlServer(connectionString));
 
             // In production, the React files will be served from this directory
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<IBookRepo, BookRepo>();
+            services.AddScoped<ICategoryRepo, CategoryRepo>();
+            services.AddScoped<IBorrowingRequestRepo, BorrowingRequestRepo>();
+            services.AddScoped<IBorrowingRequestDetailRepo, BorrowingRequestDetailRepo>();
+
+            services.AddScoped<IBookServices, BookServices>();
+            services.AddScoped<ICategoryServices, CategoryServices>();
+            services.AddScoped<IBorrowingRequestServices, BorrowingRequestServices>();
+            services.AddScoped<IBorrowingRequestDetailServices, BorrowingRequestDetailServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +57,11 @@ namespace LibraryManager
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                });
             }
             else
             {
