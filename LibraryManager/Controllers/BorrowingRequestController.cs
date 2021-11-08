@@ -1,4 +1,5 @@
-﻿using LibraryManager.Models;
+﻿using LibraryManager.DTOs;
+using LibraryManager.Models;
 using LibraryManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,7 +20,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<BorrowingRequest>> GetBorrowingRequest()
+        public ActionResult<IEnumerable<BorrowingRequestDto>> GetBorrowingRequest()
         {
             var listBorrowingRequest= _borrowingRequestServices.GetBorrowingRequests();
             if (listBorrowingRequest.Any())
@@ -41,7 +42,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateBorrowingRequest(BorrowingRequest borrowingRequest)
+        public ActionResult CreateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             var signal = _borrowingRequestServices.CreateBorrowingRequest(borrowingRequest);
             if (signal)
@@ -52,7 +53,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPut]
-        public ActionResult UpdateBorrowingRequest(BorrowingRequest borrowingRequest)
+        public ActionResult UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             var signal = _borrowingRequestServices.UpdateBorrowingRequest(borrowingRequest);
             if (signal)

@@ -1,4 +1,5 @@
-﻿using LibraryManager.Models;
+﻿using LibraryManager.DTOs;
+using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ namespace LibraryManager.Services
 {
     public interface ICategoryServices
     {
-        public IEnumerable<Category> GetCategories();
-        public Category GetCategoryById(Guid id);
-        public string CreateCategory(Category category);
-        public bool UpdateCategory(Category category);
+        public IEnumerable<CategoryDto> GetCategories();
+        public CategoryDto GetCategoryById(Guid id);
+        public string CreateCategory(CategoryDto category);
+        public bool UpdateCategory(CategoryDto category);
         public bool DeleteCategory(Guid id);
     }
 }

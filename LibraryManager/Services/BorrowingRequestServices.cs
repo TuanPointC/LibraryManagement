@@ -1,4 +1,5 @@
 ﻿using LibraryManager.DAO;
+using LibraryManager.DTOs;
 using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace LibraryManager.Services
         {
             _borrowingRequestRepo = borrowingRequestRepo;
         }
-        public bool CreateBorrowingRequest(BorrowingRequest borrowingRequest)
+        public bool CreateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             try
             {
@@ -44,17 +45,17 @@ namespace LibraryManager.Services
             }
         }
 
-        public BorrowingRequest GetBorrowingRequestById(Guid id)
+        public BorrowingRequestDto GetBorrowingRequestById(Guid id)
         {
             return _borrowingRequestRepo.GetBorrowingRequestById(id);
         }
 
-        public IEnumerable<BorrowingRequest> GetBorrowingRequests()
+        public IEnumerable<BorrowingRequestDto> GetBorrowingRequests()
         {
             return _borrowingRequestRepo.GetBorrowingRequests();
         }
 
-        public bool UpdateBorrowingRequest(BorrowingRequest borrowingRequest)
+        public bool UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             try
             {

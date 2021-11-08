@@ -1,4 +1,5 @@
-﻿using LibraryManager.Models;
+﻿using LibraryManager.DTOs;
+using LibraryManager.Models;
 using LibraryManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,7 +20,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Book>> GetBooks()
+        public ActionResult<IEnumerable<BookDto>> GetBooks()
         {
             var listBooks = _bookServices.GetBooks();
             if (listBooks.Any())
@@ -41,18 +42,19 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateBook(Book book)
+        public ActionResult CreateBook(BookDto book)
         {
             var signal = _bookServices.CreateBook(book);
             if (signal)
             {
-                return Ok();
+                //Console.WriteLine(book.Category.Name);
+                return Ok(book);
             }
             return BadRequest();
         }
 
         [HttpPut]
-        public ActionResult UpdateBook(Book book)
+        public ActionResult UpdateBook(BookDto book)
         {
             var signal = _bookServices.UpdateBook(book);
             if (signal)

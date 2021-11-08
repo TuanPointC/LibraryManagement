@@ -1,4 +1,5 @@
 ﻿using LibraryManager.DAO;
+using LibraryManager.DTOs;
 using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace LibraryManager.Services
             _borrowingRequestDetailRepo = borrowingRequestDetailRepo;
         }
 
-        public bool CreateBorrowingRequestDetail(BorrowingRequestDetail borrowingRequestDetail)
+        public bool CreateBorrowingRequestDetail(BorrowingRequestDetailDto borrowingRequestDetail)
         {
             try
             {
@@ -45,18 +46,18 @@ namespace LibraryManager.Services
             }
         }
 
-        public BorrowingRequestDetail GetBorrowingRequestDetailById(Guid id)
+        public BorrowingRequestDetailDto GetBorrowingRequestDetailById(Guid id)
         {
             return _borrowingRequestDetailRepo.GetBorrowingRequestDetailById(id);
             ;
         }
 
-        public IEnumerable<BorrowingRequestDetail> GetBorrowingRequestDetails()
+        public IEnumerable<BorrowingRequestDetailDto> GetBorrowingRequestDetails()
         {
             return _borrowingRequestDetailRepo.GetBorrowingRequestDetails();
         }
 
-        public bool UpdateBorrowingRequestDetail(BorrowingRequestDetail borrowingRequestDetail)
+        public bool UpdateBorrowingRequestDetail(BorrowingRequestDetailDto borrowingRequestDetail)
         {
             try
             {

@@ -1,4 +1,5 @@
-﻿using LibraryManager.Models;
+﻿using LibraryManager.DTOs;
+using LibraryManager.Models;
 using LibraryManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,7 +20,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Category>> GetCategories()
+        public ActionResult<IEnumerable<CategoryDto>> GetCategories()
         {
             var listCategories = _categoryService.GetCategories();
             if (listCategories.Any())
@@ -41,7 +42,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCategory(Category category)
+        public ActionResult CreateCategory(CategoryDto category)
         {
             var signal = _categoryService.CreateCategory(category);
             if (signal=="Ok")
@@ -52,7 +53,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPut]
-        public ActionResult UpdateCategory(Category category)
+        public ActionResult UpdateCategory(CategoryDto category)
         {
             var signal = _categoryService.UpdateCategory(category);
             if (signal)

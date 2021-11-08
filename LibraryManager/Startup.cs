@@ -1,4 +1,5 @@
 using LibraryManager.DAO;
+using LibraryManager.Mapper;
 using LibraryManager.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +40,8 @@ namespace LibraryManager
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             services.AddScoped<IBookRepo, BookRepo>();
             services.AddScoped<ICategoryRepo, CategoryRepo>();

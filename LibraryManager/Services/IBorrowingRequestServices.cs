@@ -1,4 +1,5 @@
-﻿using LibraryManager.Models;
+﻿using LibraryManager.DTOs;
+using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ namespace LibraryManager.Services
 {
     public interface IBorrowingRequestServices
     {
-        public IEnumerable<BorrowingRequest> GetBorrowingRequests();
-        public BorrowingRequest GetBorrowingRequestById(Guid id);
-        public bool CreateBorrowingRequest(BorrowingRequest borrowingRequest);
-        public bool UpdateBorrowingRequest(BorrowingRequest borrowingRequest);
+        public IEnumerable<BorrowingRequestDto> GetBorrowingRequests();
+        public BorrowingRequestDto GetBorrowingRequestById(Guid id);
+        public bool CreateBorrowingRequest(BorrowingRequestDto borrowingRequest);
+        public bool UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest);
         public bool DeleteBorrowingRequest(Guid id);
     }
 }

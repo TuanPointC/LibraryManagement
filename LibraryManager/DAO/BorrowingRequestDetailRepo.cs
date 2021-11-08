@@ -1,4 +1,6 @@
-﻿using LibraryManager.Models;
+﻿using AutoMapper;
+using LibraryManager.DTOs;
+using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +11,16 @@ namespace LibraryManager.DAO
     public class BorrowingRequestDetailRepo : IBorrowingRequestDetailRepo
     {
         private readonly LibraryManagerDbContext _libraryManagerDbContext;
-        public BorrowingRequestDetailRepo(LibraryManagerDbContext libraryManagerDbContext)
+        private readonly IMapper _mapper;
+        public BorrowingRequestDetailRepo(LibraryManagerDbContext libraryManagerDbContext,IMapper mapper)
         {
             _libraryManagerDbContext = libraryManagerDbContext;
+            _mapper = mapper;
         }
-        public void CreateBorrowingRequestDetail(BorrowingRequestDetail borrowingRequestDetail)
+        public void CreateBorrowingRequestDetail(BorrowingRequestDetailDto borrowingRequestDetail)
         {
-            _libraryManagerDbContext.BorrowingRequestDetails.Add(borrowingRequestDetail);
+            var brdt = _mapper.Map<BorrowingRequestDetail>(borrowingRequestDetail);
+            _libraryManagerDbContext.BorrowingRequestDetails.Add(brdt);
             _libraryManagerDbContext.SaveChanges();
         }
         public void DeleteBorrowingRequestDetail(Guid id)
@@ -24,21 +29,21 @@ namespace LibraryManager.DAO
             _libraryManagerDbContext.BorrowingRequestDetails.Remove(currentBorrowingRequestDetail);
             _libraryManagerDbContext.SaveChanges();
         }
-        public BorrowingRequestDetail GetBorrowingRequestDetailById(Guid id)
+        public BorrowingRequestDetailDto GetBorrowingRequestDetailById(Guid id)
         {
             var currentBorrowingRequestDetail = _libraryManagerDbContext.BorrowingRequestDetails.Where(b => b.Id == id).FirstOrDefault();
-            return currentBorrowingRequestDetail;
+            return _mapper.Map<BorrowingRequestDetailDto>(currentBorrowingRequestDetail);
         }
 
-        public IEnumerable<BorrowingRequestDetail> GetBorrowingRequestDetails()
+        public IEnumerable<BorrowingRequestDetailDto> GetBorrowingRequestDetails()
         {
-            return _libraryManagerDbContext.BorrowingRequestDetails.ToList();
+            return _mapper.Map<List<BorrowingRequestDetailDto>>(_libraryManagerDbContext.BorrowingRequestDetails.ToList());
         }
 
-        public void UpdateBorrowingRequestDetail(BorrowingRequestDetail borrowingRequestDetail)
+        public void UpdateBorrowingRequestDetail(BorrowingRequestDetailDto borrowingRequestDetail)
         {
             var currentBorrowingRequestDetail = _libraryManagerDbContext.BorrowingRequestDetails.Where(b => b.Id == borrowingRequestDetail.Id).FirstOrDefault();
-            currentBorrowingRequestDetail = borrowingRequestDetail;
+            currentBorrowingRequestDetail = _mapper.Map<BorrowingRequestDetail>(borrowingRequestDetail);
             _libraryManagerDbContext.SaveChanges();
         }
 

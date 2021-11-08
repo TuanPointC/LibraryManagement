@@ -1,4 +1,5 @@
-﻿using LibraryManager.DTOs;
+﻿using AutoMapper;
+using LibraryManager.DTOs;
 using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
@@ -10,20 +11,16 @@ namespace LibraryManager.DAO
     public class BookRepo : IBookRepo
     {
         private readonly LibraryManagerDbContext _libraryManagerDbContext;
-        public BookRepo(LibraryManagerDbContext libraryManagerDbContext)
+        private readonly IMapper _mapper;
+        public BookRepo(LibraryManagerDbContext libraryManagerDbContext, IMapper mapper)
         {
             _libraryManagerDbContext = libraryManagerDbContext;
+            _mapper = mapper;
         }
 
         public void CreateBook(BookDto book)
         {
-            var b = new Book();
-            b.Author = book.Author;
-            b.Name = book.Name;
-            b.CategoryId = book.CategoryId;
-            b.Summary = book.Summary;
-            b.UrlImage = book.UrlImage;
-
+            Book b = _mapper.Map<Book>(book);
             _libraryManagerDbContext.Books.Add(b);
             _libraryManagerDbContext.SaveChanges();
         }
@@ -38,25 +35,20 @@ namespace LibraryManager.DAO
         public BookDto GetBookById(Guid id)
         {
             var currentBook = _libraryManagerDbContext.Books.Where(b => b.Id == id).FirstOrDefault();
-            var b = new BookDto();
-            b.Author = currentBook.Author;
-            b.Name = currentBook.Name;
-            b.CategoryId = currentBook.CategoryId;
-            b.Summary = currentBook.Summary;
-            b.UrlImage = currentBook.UrlImage;
+            BookDto b = _mapper.Map<BookDto>(currentBook);
             return b;
         }
 
         public IEnumerable<BookDto> GetBooks()
         {
 
-            return _libraryManagerDbContext.Books.ToList();
+            return _mapper.Map<List<BookDto>>(_libraryManagerDbContext.Books.ToList());
         }
 
-        public void UpdateBook(Book book)
+        public void UpdateBook(BookDto book)
         {
             var currentBook = _libraryManagerDbContext.Books.Where(b => b.Id == book.Id).FirstOrDefault();
-            currentBook = book;
+            currentBook = _mapper.Map<Book>(book);
             _libraryManagerDbContext.SaveChanges();
         }
     }

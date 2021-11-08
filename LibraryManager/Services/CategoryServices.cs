@@ -1,4 +1,5 @@
 ﻿using LibraryManager.DAO;
+using LibraryManager.DTOs;
 using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace LibraryManager.Services
         {
             _categoryRepo = categoryRepo;
         }
-        public string CreateCategory(Category category)
+        public string CreateCategory(CategoryDto category)
         {
             try
             {
@@ -44,17 +45,17 @@ namespace LibraryManager.Services
             }
         }
 
-        public IEnumerable<Category> GetCategories()
+        public IEnumerable<CategoryDto> GetCategories()
         {
             return _categoryRepo.GetCategories();
         }
 
-        public Category GetCategoryById(Guid id)
+        public CategoryDto GetCategoryById(Guid id)
         {
             return _categoryRepo.GetCategoryById(id);
         }
 
-        public bool UpdateCategory(Category category)
+        public bool UpdateCategory(CategoryDto category)
         {
             try
             {

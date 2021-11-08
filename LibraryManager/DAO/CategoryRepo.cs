@@ -1,4 +1,6 @@
-﻿using LibraryManager.Models;
+﻿using AutoMapper;
+using LibraryManager.DTOs;
+using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +11,16 @@ namespace LibraryManager.DAO
     public class CategoryRepo : ICategoryRepo
     {
         private readonly LibraryManagerDbContext _libraryManagerDbContext;
-        public CategoryRepo(LibraryManagerDbContext libraryManagerDbContext)
+        private readonly IMapper _mapper;
+        public CategoryRepo(LibraryManagerDbContext libraryManagerDbContext, IMapper mapper)
         {
             _libraryManagerDbContext = libraryManagerDbContext;
+            _mapper = mapper;
         }
-        public void CreateCategory(Category category)
+        public void CreateCategory(CategoryDto category)
         {
-            _libraryManagerDbContext.Categories.Add(category);
+            var c = _mapper.Map<Category>(category);
+            _libraryManagerDbContext.Categories.Add(c);
             _libraryManagerDbContext.SaveChanges();
         }
 
@@ -26,20 +31,20 @@ namespace LibraryManager.DAO
             _libraryManagerDbContext.SaveChanges();
         }
 
-        public IEnumerable<Category> GetCategories()
+        public IEnumerable<CategoryDto> GetCategories()
         {
-            return _libraryManagerDbContext.Categories.ToList();
+            return _mapper.Map<List<CategoryDto>>(_libraryManagerDbContext.Categories.ToList());
         }
 
-        public Category GetCategoryById(Guid id)
+        public CategoryDto GetCategoryById(Guid id)
         {
-            return _libraryManagerDbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
+            return _mapper.Map<CategoryDto> (_libraryManagerDbContext.Categories.Where(c => c.Id == id).FirstOrDefault());
         }
 
-        public void UpdateCategory(Category category)
+        public void UpdateCategory(CategoryDto category)
         {
             var currentCategoriy = _libraryManagerDbContext.Categories.Where(b => b.Id == category.Id).FirstOrDefault();
-            currentCategoriy = category;
+            currentCategoriy = _mapper.Map<Category>(category);
             _libraryManagerDbContext.SaveChanges();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using LibraryManager.DAO;
+using LibraryManager.DTOs;
 using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace LibraryManager.Services
             _bookRepo = bookRepo;
         }
 
-        public bool CreateBook(Book book)
+        public bool CreateBook(BookDto book)
         {
             try
             {
@@ -45,17 +46,17 @@ namespace LibraryManager.Services
             }
         }
 
-        public Book GetBookById(Guid id)
+        public BookDto GetBookById(Guid id)
         {
             return _bookRepo.GetBookById(id);
         }
 
-        public IEnumerable<Book> GetBooks()
+        public IEnumerable<BookDto> GetBooks()
         {
             return _bookRepo.GetBooks();
         }
 
-        public bool UpdateBook(Book book)
+        public bool UpdateBook(BookDto book)
         {
             try
             {

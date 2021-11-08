@@ -1,4 +1,5 @@
-﻿using LibraryManager.Models;
+﻿using LibraryManager.DTOs;
+using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ namespace LibraryManager.Services
 {
     public interface IBookServices
     {
-        public IEnumerable<Book> GetBooks();
-        public Book GetBookById(Guid id);
-        public bool CreateBook(Book book);
-        public bool UpdateBook(Book book);
+        public IEnumerable<BookDto> GetBooks();
+        public BookDto GetBookById(Guid id);
+        public bool CreateBook(BookDto book);
+        public bool UpdateBook(BookDto book);
         public bool DeleteBook(Guid id);
     }
 }
