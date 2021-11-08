@@ -10,12 +10,11 @@ namespace LibraryManager.Models
     public class BorrowingRequestDetail
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
         public Guid Id { get; set; }
-        [Required]
+        public Guid BookId{ get; set; }
+        public Book Book { get; set; }
+
         public Guid BorrowingRequestId { get; set; }
-        [Required]
-        public ICollection<Book> BooksRequest { get; set; }
-        
+        public BorrowingRequest BorrowingRequest{ get; set; }
     }
 }

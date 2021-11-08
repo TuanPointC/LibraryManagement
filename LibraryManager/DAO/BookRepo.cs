@@ -1,4 +1,5 @@
-﻿using LibraryManager.Models;
+﻿using LibraryManager.DTOs;
+using LibraryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,16 @@ namespace LibraryManager.DAO
             _libraryManagerDbContext = libraryManagerDbContext;
         }
 
-        public void CreateBook(Book book)
+        public void CreateBook(BookDto book)
         {
+            var b = new Book();
+            b.Author = book.Author;
+            b.Name = book.Name;
+            b.CategoryId = book.CategoryId;
+            b.Summary = book.Summary;
+            b.UrlImage = book.UrlImage;
 
-            _libraryManagerDbContext.Books.Add(book);
+            _libraryManagerDbContext.Books.Add(b);
             _libraryManagerDbContext.SaveChanges();
         }
 
@@ -28,14 +35,21 @@ namespace LibraryManager.DAO
             _libraryManagerDbContext.SaveChanges();
         }
 
-        public Book GetBookById(Guid id)
+        public BookDto GetBookById(Guid id)
         {
             var currentBook = _libraryManagerDbContext.Books.Where(b => b.Id == id).FirstOrDefault();
-            return currentBook;
+            var b = new BookDto();
+            b.Author = currentBook.Author;
+            b.Name = currentBook.Name;
+            b.CategoryId = currentBook.CategoryId;
+            b.Summary = currentBook.Summary;
+            b.UrlImage = currentBook.UrlImage;
+            return b;
         }
 
-        public IEnumerable<Book> GetBooks()
+        public IEnumerable<BookDto> GetBooks()
         {
+
             return _libraryManagerDbContext.Books.ToList();
         }
 

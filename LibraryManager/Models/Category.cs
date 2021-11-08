@@ -10,14 +10,8 @@ namespace LibraryManager.Models
     public class Category
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-        [Key]
-        public Guid Id { get; set; }
-        
-        [Required]
-        [MaxLength(200)]
+        public Guid Id { get; set; }    
         public string Name { get; set; }
-
         public ICollection<Book> Books { get; set; }
     }
 }

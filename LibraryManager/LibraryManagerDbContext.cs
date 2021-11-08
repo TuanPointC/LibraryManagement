@@ -19,25 +19,49 @@ namespace LibraryManager
                 entity.ToTable("Books")
                     .HasKey(k => k.Id);
 
-                entity.Property(p=>p.Id)
+                entity.Property(p => p.Id)
                     .IsRequired();
 
-                entity.HasOne(p => p.Category).WithMany(p => p.Books).OnDelete(DeleteBehavior.Cascade);
-                entity.HasOne(p => p.BorrowingRequestDetail).WithMany(p => p.BooksRequest);
+                entity.Property(p => p.Name)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(p => p.Author)
+                    .HasMaxLength(200).IsRequired();
+
+                entity.Property(p => p.Summary)
+                    .IsRequired();
+
+                entity.Property(p => p.UrlImage)
+                    .IsRequired();
+
+                entity.HasOne(p => p.Category).WithMany(p => p.Books)
+                    .HasForeignKey(p => p.CategoryId);
             });
 
             modelBuilder.Entity<BorrowingRequest>(entity =>
             {
-                entity.Property(p => p.Date).HasDefaultValue(DateTime.Now);
+                entity.ToTable("BorrowingRequest").HasKey(p => p.Id);
+                entity.Property(p => p.WhoHandleId).IsRequired();
+                entity.Property(p => p.Status).IsRequired();
+                entity.Property(p => p.RequestedDate).HasDefaultValue(DateTime.Now);
+                
             });
 
-            modelBuilder.Entity<Category>()
-                .HasMany(p => p.Books).WithOne(p => p.Category).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<BorrowingRequestDetail>()
-                .HasMany(p => p.BooksRequest).WithOne(p => p.BorrowingRequestDetail);
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.HasMany(p => p.Books).WithOne(p => p.Category).OnDelete(DeleteBehavior.Cascade);
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.Id).IsRequired();
+                entity.Property(p => p.Name).HasMaxLength(200).IsRequired();
+            });
+
+            modelBuilder.Entity<BorrowingRequestDetail>().HasKey(p => new { p.BookId, p.BorrowingRequestId });
+
+                
         }
 
-        public DbSet<Book> Books {get;set;}
+        public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<BorrowingRequest> BorrowingRequests { get; set; }
 
