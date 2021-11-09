@@ -65,7 +65,7 @@ namespace LibraryManager.Migrations
                     b.Property<DateTime>("RequestedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 8, 15, 5, 34, 442, DateTimeKind.Local).AddTicks(5605));
+                        .HasDefaultValue(new DateTime(2021, 11, 9, 15, 30, 19, 965, DateTimeKind.Local).AddTicks(4130));
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -78,6 +78,8 @@ namespace LibraryManager.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("WhoRequestId");
 
                     b.ToTable("BorrowingRequest");
                 });
@@ -124,15 +126,20 @@ namespace LibraryManager.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Right")
+                    b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -149,6 +156,17 @@ namespace LibraryManager.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("LibraryManager.Models.BorrowingRequest", b =>
+                {
+                    b.HasOne("LibraryManager.Models.User", "User")
+                        .WithMany("BorrowingRequests")
+                        .HasForeignKey("WhoRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LibraryManager.Models.BorrowingRequestDetail", b =>
@@ -183,6 +201,11 @@ namespace LibraryManager.Migrations
             modelBuilder.Entity("LibraryManager.Models.Category", b =>
                 {
                     b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("LibraryManager.Models.User", b =>
+                {
+                    b.Navigation("BorrowingRequests");
                 });
 #pragma warning restore 612, 618
         }

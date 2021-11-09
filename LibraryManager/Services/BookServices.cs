@@ -1,4 +1,5 @@
-﻿using LibraryManager.DAO;
+﻿using AutoMapper;
+using LibraryManager.DAO;
 using LibraryManager.DTOs;
 using LibraryManager.Models;
 using System;
@@ -11,9 +12,11 @@ namespace LibraryManager.Services
     public class BookServices : IBookServices
     {
         private readonly IBookRepo _bookRepo;
-        public BookServices(IBookRepo bookRepo)
+        private readonly IMapper _mapper;
+        public BookServices(IBookRepo bookRepo, IMapper mapper)
         {
             _bookRepo = bookRepo;
+            _mapper = mapper;
         }
 
         public bool CreateBook(BookDto book)
@@ -22,7 +25,7 @@ namespace LibraryManager.Services
             {
                 if (book != null)
                 {
-                    _bookRepo.CreateBook(book);
+                    _bookRepo.CreateBook(_mapper.Map<BookDto, Book>(book));
                     return true;
                 }
                 return false;
@@ -48,12 +51,12 @@ namespace LibraryManager.Services
 
         public BookDto GetBookById(Guid id)
         {
-            return _bookRepo.GetBookById(id);
+            return _mapper.Map<Book,BookDto>(_bookRepo.GetBookById(id));
         }
 
         public IEnumerable<BookDto> GetBooks()
         {
-            return _bookRepo.GetBooks();
+            return _mapper.Map<IEnumerable<Book>, IEnumerable<BookDto>>(_bookRepo.GetBooks());
         }
 
         public bool UpdateBook(BookDto book)
@@ -62,7 +65,7 @@ namespace LibraryManager.Services
             {
                 if (book != null)
                 {
-                    _bookRepo.UpdateBook(book);
+                    _bookRepo.UpdateBook(_mapper.Map<BookDto,Book>(book));
                     return true;
                 }
                 return false;

@@ -1,11 +1,17 @@
-﻿using System;
+﻿using LibraryManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LibraryManager.DAO
 {
-    interface IUserRepo
+    public interface IUserRepo
     {
+        public IEnumerable<User> GetUsers();
+        public User GetUserById(Guid id);
+        public void CreateUser(User user);
+        public void UpdateUser(User user);
+        public void DeleteUser(Guid id);
     }
 }

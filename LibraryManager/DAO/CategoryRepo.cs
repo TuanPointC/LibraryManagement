@@ -11,16 +11,13 @@ namespace LibraryManager.DAO
     public class CategoryRepo : ICategoryRepo
     {
         private readonly LibraryManagerDbContext _libraryManagerDbContext;
-        private readonly IMapper _mapper;
-        public CategoryRepo(LibraryManagerDbContext libraryManagerDbContext, IMapper mapper)
+        public CategoryRepo(LibraryManagerDbContext libraryManagerDbContext)
         {
             _libraryManagerDbContext = libraryManagerDbContext;
-            _mapper = mapper;
         }
-        public void CreateCategory(CategoryDto category)
+        public void CreateCategory(Category category)
         {
-            var c = _mapper.Map<Category>(category);
-            _libraryManagerDbContext.Categories.Add(c);
+            _libraryManagerDbContext.Categories.Add(category);
             _libraryManagerDbContext.SaveChanges();
         }
 
@@ -31,20 +28,20 @@ namespace LibraryManager.DAO
             _libraryManagerDbContext.SaveChanges();
         }
 
-        public IEnumerable<CategoryDto> GetCategories()
+        public IEnumerable<Category> GetCategories()
         {
-            return _mapper.Map<List<CategoryDto>>(_libraryManagerDbContext.Categories.ToList());
+            return _libraryManagerDbContext.Categories.ToList();
         }
 
-        public CategoryDto GetCategoryById(Guid id)
+        public Category GetCategoryById(Guid id)
         {
-            return _mapper.Map<CategoryDto> (_libraryManagerDbContext.Categories.Where(c => c.Id == id).FirstOrDefault());
+            return _libraryManagerDbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
         }
 
-        public void UpdateCategory(CategoryDto category)
+        public void UpdateCategory(Category category)
         {
             var currentCategoriy = _libraryManagerDbContext.Categories.Where(b => b.Id == category.Id).FirstOrDefault();
-            currentCategoriy = _mapper.Map<Category>(category);
+            currentCategoriy = category;
             _libraryManagerDbContext.SaveChanges();
         }
     }

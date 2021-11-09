@@ -16,6 +16,7 @@ namespace LibraryManager.Mapper
             CreateMap<CategoryDto, Category>().ReverseMap();
             CreateMap<BorrowingRequestDto, BorrowingRequest>().ReverseMap();
             CreateMap<BorrowingRequestDetailDto, BorrowingRequestDetail>().ReverseMap();
+            CreateMap<UserDto, User>().ReverseMap();
         }
     }
 }

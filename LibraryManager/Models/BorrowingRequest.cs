@@ -12,6 +12,7 @@ namespace LibraryManager.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public Guid WhoRequestId { get; set; }
+        public User User { get; set; }
         public DateTime RequestedDate { get; set; }
         public DateTime HandledDate { get; set; }
         public string Status { get; set; }

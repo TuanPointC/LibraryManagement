@@ -11,16 +11,13 @@ namespace LibraryManager.DAO
     public class BorrowingRequestRepo : IBorrowingRequestRepo
     {
         private readonly LibraryManagerDbContext _libraryManagerDbContext;
-        private readonly IMapper _mapper;
-        public BorrowingRequestRepo(LibraryManagerDbContext libraryManagerDbContext, IMapper mapper)
+        public BorrowingRequestRepo(LibraryManagerDbContext libraryManagerDbContext)
         {
             _libraryManagerDbContext = libraryManagerDbContext;
-            _mapper = mapper;
         }
-        public void CreateBorrowingRequest(BorrowingRequestDto borrowingRequest)
+        public void CreateBorrowingRequest(BorrowingRequest borrowingRequest)
         {
-            var br = _mapper.Map<BorrowingRequest>(borrowingRequest);
-            _libraryManagerDbContext.BorrowingRequests.Add(br);
+            _libraryManagerDbContext.BorrowingRequests.Add(borrowingRequest);
             _libraryManagerDbContext.SaveChanges();
         }
 
@@ -31,20 +28,20 @@ namespace LibraryManager.DAO
             _libraryManagerDbContext.SaveChanges();
         }
 
-        public BorrowingRequestDto GetBorrowingRequestById(Guid id)
+        public BorrowingRequest GetBorrowingRequestById(Guid id)
         {
-            return _mapper.Map<BorrowingRequestDto>(_libraryManagerDbContext.BorrowingRequests.Where(b => b.Id == id).FirstOrDefault());
+            return _libraryManagerDbContext.BorrowingRequests.Where(b => b.Id == id).FirstOrDefault();
         }
 
-        public IEnumerable<BorrowingRequestDto> GetBorrowingRequests()
+        public IEnumerable<BorrowingRequest> GetBorrowingRequests()
         {
-            return _mapper.Map<List<BorrowingRequestDto>>(_libraryManagerDbContext.BorrowingRequests.ToList());
+            return _libraryManagerDbContext.BorrowingRequests.ToList();
         }
 
-        public void UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
+        public void UpdateBorrowingRequest(BorrowingRequest borrowingRequest)
         {
             var currentBorrowingRequest = _libraryManagerDbContext.BorrowingRequests.Where(b => b.Id == borrowingRequest.Id).FirstOrDefault();
-            currentBorrowingRequest = _mapper.Map<BorrowingRequest>(borrowingRequest);
+            currentBorrowingRequest = borrowingRequest;
             _libraryManagerDbContext.SaveChanges();
         }
     }

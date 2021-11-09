@@ -11,17 +11,14 @@ namespace LibraryManager.DAO
     public class BookRepo : IBookRepo
     {
         private readonly LibraryManagerDbContext _libraryManagerDbContext;
-        private readonly IMapper _mapper;
-        public BookRepo(LibraryManagerDbContext libraryManagerDbContext, IMapper mapper)
+        public BookRepo(LibraryManagerDbContext libraryManagerDbContext)
         {
             _libraryManagerDbContext = libraryManagerDbContext;
-            _mapper = mapper;
         }
 
-        public void CreateBook(BookDto book)
+        public void CreateBook(Book book)
         {
-            Book b = _mapper.Map<Book>(book);
-            _libraryManagerDbContext.Books.Add(b);
+            _libraryManagerDbContext.Books.Add(book);
             _libraryManagerDbContext.SaveChanges();
         }
 
@@ -32,23 +29,21 @@ namespace LibraryManager.DAO
             _libraryManagerDbContext.SaveChanges();
         }
 
-        public BookDto GetBookById(Guid id)
+        public Book GetBookById(Guid id)
         {
             var currentBook = _libraryManagerDbContext.Books.Where(b => b.Id == id).FirstOrDefault();
-            BookDto b = _mapper.Map<BookDto>(currentBook);
-            return b;
+            return currentBook;
         }
 
-        public IEnumerable<BookDto> GetBooks()
+        public IEnumerable<Book> GetBooks()
         {
-
-            return _mapper.Map<List<BookDto>>(_libraryManagerDbContext.Books.ToList());
+            return _libraryManagerDbContext.Books.ToList();
         }
 
-        public void UpdateBook(BookDto book)
+        public void UpdateBook(Book book)
         {
             var currentBook = _libraryManagerDbContext.Books.Where(b => b.Id == book.Id).FirstOrDefault();
-            currentBook = _mapper.Map<Book>(book);
+            currentBook = book;
             _libraryManagerDbContext.SaveChanges();
         }
     }

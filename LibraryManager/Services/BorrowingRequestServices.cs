@@ -1,4 +1,5 @@
-﻿using LibraryManager.DAO;
+﻿using AutoMapper;
+using LibraryManager.DAO;
 using LibraryManager.DTOs;
 using LibraryManager.Models;
 using System;
@@ -11,9 +12,11 @@ namespace LibraryManager.Services
     public class BorrowingRequestServices : IBorrowingRequestServices
     {
         private readonly IBorrowingRequestRepo _borrowingRequestRepo;
-        public BorrowingRequestServices(IBorrowingRequestRepo borrowingRequestRepo)
+        private readonly IMapper _mapper;
+        public BorrowingRequestServices(IBorrowingRequestRepo borrowingRequestRepo, IMapper mapper)
         {
             _borrowingRequestRepo = borrowingRequestRepo;
+            _mapper = mapper;
         }
         public bool CreateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
@@ -21,7 +24,7 @@ namespace LibraryManager.Services
             {
                 if (borrowingRequest != null)
                 {
-                    _borrowingRequestRepo.CreateBorrowingRequest(borrowingRequest);
+                    _borrowingRequestRepo.CreateBorrowingRequest(_mapper.Map<BorrowingRequestDto,BorrowingRequest>(borrowingRequest));
                     return true;
                 }
                 return false;
@@ -47,12 +50,12 @@ namespace LibraryManager.Services
 
         public BorrowingRequestDto GetBorrowingRequestById(Guid id)
         {
-            return _borrowingRequestRepo.GetBorrowingRequestById(id);
+            return _mapper.Map<BorrowingRequest, BorrowingRequestDto > (_borrowingRequestRepo.GetBorrowingRequestById(id));
         }
 
         public IEnumerable<BorrowingRequestDto> GetBorrowingRequests()
         {
-            return _borrowingRequestRepo.GetBorrowingRequests();
+            return _mapper.Map<IEnumerable<BorrowingRequest>,IEnumerable<BorrowingRequestDto>>(_borrowingRequestRepo.GetBorrowingRequests());
         }
 
         public bool UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
@@ -61,7 +64,7 @@ namespace LibraryManager.Services
             {
                 if (borrowingRequest != null)
                 {
-                    _borrowingRequestRepo.UpdateBorrowingRequest(borrowingRequest);
+                    _borrowingRequestRepo.UpdateBorrowingRequest(_mapper.Map<BorrowingRequestDto,BorrowingRequest>(borrowingRequest));
                     return true;
                 }
                 return false;

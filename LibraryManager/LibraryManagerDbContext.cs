@@ -1,4 +1,5 @@
 ﻿using LibraryManager.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,26 @@ namespace LibraryManager
     public class LibraryManagerDbContext : DbContext
     {
         public LibraryManagerDbContext() { }
-        public LibraryManagerDbContext(DbContextOptions options) : base(options) { }
+        public LibraryManagerDbContext(DbContextOptions<LibraryManagerDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>(entity=>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.Email)
+                    .IsRequired()
+                    .HasMaxLength(200);
+                entity.Property(p => p.Name)
+                    .IsRequired()
+                    .HasMaxLength(200);
+                entity.Property(p => p.Password)
+                    .IsRequired();
+                entity.HasMany(p => p.BorrowingRequests).WithOne(p => p.User).HasForeignKey(p => p.WhoRequestId);
+            });
+
             modelBuilder.Entity<Book>(entity =>
             {
                 entity.ToTable("Books")
@@ -42,8 +59,8 @@ namespace LibraryManager
             modelBuilder.Entity<BorrowingRequest>(entity =>
             {
                 entity.ToTable("BorrowingRequest").HasKey(p => p.Id);
-                entity.Property(p => p.WhoHandleId).IsRequired();
                 entity.Property(p => p.Status).IsRequired();
+                entity.Property(p => p.WhoRequestId).IsRequired();
                 entity.Property(p => p.RequestedDate).HasDefaultValue(DateTime.Now);
                 
             });
@@ -60,13 +77,13 @@ namespace LibraryManager
 
                 
         }
-
+        public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<BorrowingRequest> BorrowingRequests { get; set; }
 
         public DbSet<BorrowingRequestDetail> BorrowingRequestDetails { get; set; }
-        public DbSet<User> Users { get; set; }
+
 
     }
 }

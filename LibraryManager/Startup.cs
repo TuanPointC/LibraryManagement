@@ -46,12 +46,12 @@ namespace LibraryManager
             services.AddScoped<IBookRepo, BookRepo>();
             services.AddScoped<ICategoryRepo, CategoryRepo>();
             services.AddScoped<IBorrowingRequestRepo, BorrowingRequestRepo>();
-            services.AddScoped<IBorrowingRequestDetailRepo, BorrowingRequestDetailRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
 
             services.AddScoped<IBookServices, BookServices>();
             services.AddScoped<ICategoryServices, CategoryServices>();
             services.AddScoped<IBorrowingRequestServices, BorrowingRequestServices>();
-            services.AddScoped<IBorrowingRequestDetailServices, BorrowingRequestDetailServices>();
+            services.AddScoped<IUserServices, UserServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +78,8 @@ namespace LibraryManager
             app.UseSpaStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
