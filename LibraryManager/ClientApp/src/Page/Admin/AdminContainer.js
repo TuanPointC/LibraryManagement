@@ -5,9 +5,14 @@ import User from './User/User';
 import Category from './Category/Category';
 import Request from './Request/Request';
 import Book from './Book/Book';
+import UpdateUser from "./User/UpdateUser";
+import UpdateCategory from "./Category/UpdateCategory";
+import UpdateBook from "./Book/UpdateBook";
+
 const { Footer, Header, Content, Sider } = Layout;
 
 const AdminContainer = () => {
+
     return (
         <Layout className="layout App">
             <Router>
@@ -27,14 +32,23 @@ const AdminContainer = () => {
                             <Route exact path="/admin/category">
                                 <Category />
                             </Route>
+                            <Route path="/admin/category/:id" >
+                                <UpdateCategory />
+                            </Route>
                             <Route exact path="/admin/book">
                                 <Book />
+                            </Route>
+                            <Route path="/admin/book/:id" >
+                                <UpdateBook />
                             </Route>
                             <Route exact path="/admin/request" >
                                 <Request />
                             </Route>
                             <Route exact path="/admin/user" >
                                 <User />
+                            </Route>
+                            <Route path="/admin/user/:id" >
+                                <UpdateUser />
                             </Route>
 
                         </Switch>

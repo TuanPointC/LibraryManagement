@@ -40,8 +40,8 @@ namespace LibraryManager.DAO
 
         public void UpdateCategory(Category category)
         {
-            var currentCategoriy = _libraryManagerDbContext.Categories.Where(b => b.Id == category.Id).FirstOrDefault();
-            currentCategoriy = category;
+            var currentCategory = _libraryManagerDbContext.Categories.Single(b => b.Id == category.Id);
+            currentCategory.Name = category.Name;
             _libraryManagerDbContext.SaveChanges();
         }
     }

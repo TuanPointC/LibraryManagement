@@ -39,8 +39,11 @@ namespace LibraryManager.DAO
 
         public void UpdateUser(User user)
         {
-            var currentUser = _libraryManagerDbContext.Users.Where(b => b.Id == user.Id).FirstOrDefault();
-            currentUser = user;
+            var currentUser = _libraryManagerDbContext.Users.Single(b => b.Id == user.Id);
+            currentUser.Name = user.Name;
+            currentUser.Email = user.Email;
+            currentUser.Password = user.Password;
+            currentUser.Role = user.Role;
             _libraryManagerDbContext.SaveChanges();
         }
     }

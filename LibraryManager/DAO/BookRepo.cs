@@ -43,7 +43,11 @@ namespace LibraryManager.DAO
         public void UpdateBook(Book book)
         {
             var currentBook = _libraryManagerDbContext.Books.Where(b => b.Id == book.Id).FirstOrDefault();
-            currentBook = book;
+            currentBook.Name = book.Name;
+            currentBook.Author = book.Author;
+            currentBook.CategoryId = book.CategoryId;
+            currentBook.UrlImage = book.UrlImage;
+            currentBook.Summary = book.Summary;
             _libraryManagerDbContext.SaveChanges();
         }
     }

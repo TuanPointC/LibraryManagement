@@ -62,7 +62,7 @@ namespace LibraryManager.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WhoRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 11, 9, 15, 30, 19, 965, DateTimeKind.Local).AddTicks(4130)),
+                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 11, 10, 10, 50, 11, 109, DateTimeKind.Local).AddTicks(6062)),
                     HandledDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WhoHandleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)

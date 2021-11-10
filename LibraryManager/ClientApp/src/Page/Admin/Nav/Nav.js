@@ -11,28 +11,28 @@ const Nav = () => {
             <Menu.Item
                 key="category"
                 icon={<HomeOutlined />}
-                style={{ backgroundColor: location[location.length-1] === 'category' ? 'gray' : '' }}
+                style={{ backgroundColor: location[2] === 'category' ? 'gray' : '' }}
             >
                 <Link to="/admin/category">Category</Link>
             </Menu.Item>
             <Menu.Item
                 key="book"
                 icon={<ContainerOutlined />}
-                style={{ backgroundColor: location[location.length-1] === 'book' ? 'gray' : '' }}
+                style={{ backgroundColor: location[2] === 'book' ? 'gray' : '' }}
             >
                 <Link to="/admin/book">Book</Link>
             </Menu.Item>
             <Menu.Item
                 key="user"
                 icon={<UserOutlined />}
-                style={{ backgroundColor: location[location.length-1] === 'user' ? 'gray' : '' }}
+                style={{ backgroundColor: location[2] === 'user' ? 'gray' : '' }}
             >
                 <Link to="/admin/user">User</Link>
             </Menu.Item>
             <Menu.Item
                 key="request"
                 icon={<UsergroupAddOutlined />}
-                style={{ backgroundColor: location[location.length-1] === 'request' ? 'gray' : '' }}
+                style={{ backgroundColor: location[2] === 'request' ? 'gray' : '' }}
             >
                 <Link to="/admin/request">Request</Link>
             </Menu.Item>

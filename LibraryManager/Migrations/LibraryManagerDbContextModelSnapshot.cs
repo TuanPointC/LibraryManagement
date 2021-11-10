@@ -65,7 +65,7 @@ namespace LibraryManager.Migrations
                     b.Property<DateTime>("RequestedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 9, 15, 30, 19, 965, DateTimeKind.Local).AddTicks(4130));
+                        .HasDefaultValue(new DateTime(2021, 11, 10, 10, 50, 11, 109, DateTimeKind.Local).AddTicks(6062));
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -160,13 +160,13 @@ namespace LibraryManager.Migrations
 
             modelBuilder.Entity("LibraryManager.Models.BorrowingRequest", b =>
                 {
-                    b.HasOne("LibraryManager.Models.User", "User")
+                    b.HasOne("LibraryManager.Models.User", "UserRequest")
                         .WithMany("BorrowingRequests")
                         .HasForeignKey("WhoRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("UserRequest");
                 });
 
             modelBuilder.Entity("LibraryManager.Models.BorrowingRequestDetail", b =>

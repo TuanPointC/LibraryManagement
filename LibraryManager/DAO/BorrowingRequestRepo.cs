@@ -41,7 +41,11 @@ namespace LibraryManager.DAO
         public void UpdateBorrowingRequest(BorrowingRequest borrowingRequest)
         {
             var currentBorrowingRequest = _libraryManagerDbContext.BorrowingRequests.Where(b => b.Id == borrowingRequest.Id).FirstOrDefault();
-            currentBorrowingRequest = borrowingRequest;
+            currentBorrowingRequest.WhoHandleId = borrowingRequest.WhoHandleId;
+            currentBorrowingRequest.WhoRequestId = borrowingRequest.WhoRequestId;
+            currentBorrowingRequest.HandledDate = borrowingRequest.HandledDate;
+            currentBorrowingRequest.RequestedDate = borrowingRequest.RequestedDate;
+            currentBorrowingRequest.Status = borrowingRequest.Status;
             _libraryManagerDbContext.SaveChanges();
         }
     }
