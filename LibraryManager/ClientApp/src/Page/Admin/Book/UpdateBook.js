@@ -1,12 +1,12 @@
 import { GetBookById, PutBook, DeleteBookById } from "../../../Api/BookApi";
 import { useState, useEffect } from "react"
-import { Spin, Form, Button, Input,Select } from 'antd';
+import { Spin, Form, Button, Input, Select } from 'antd';
 import { useParams, useHistory } from "react-router-dom";
 import { failed, success } from "../../../component/Message";
 import { GetCategories } from "../../../Api/CategoryApi";
 
-const {Option} = Select
-const {TextArea} = Input
+const { Option } = Select
+const { TextArea } = Input
 
 const layout = {
     labelCol: { span: 4 },
@@ -27,30 +27,34 @@ const UpdateBook = () => {
             var bookClone = await GetBookById(id)
             var listCategories = await GetCategories()
             var categoryName = listCategories.find(cate => cate.id === bookClone.categoryId).name
-            setBook({...bookClone,category:categoryName})
+            setBook({ ...bookClone, category: categoryName })
             setCategories(listCategories)
         }
         getBook()
     }, [id])
 
     const onFinish = async (values) => {
-        var res = await PutBook({ ...values.book, category: values.book.categoryId[0], categoryId: values.book.categoryId[1] })
-        if (res.status === 200) {
-            await success("Updating Book")
-            history.push('/admin/book')
+        try {
+            var res = await PutBook({ ...values.book, category: values.book.categoryId[0], categoryId: values.book.categoryId[1] })
+            if (res.status === 200) {
+                await success("Updating Book")
+                history.push('/admin/book')
+            }
         }
-        else {
-            failed("Updating Book")
+        catch {
+            await failed("Updating Book")
         }
     };
 
     const onDelete = async () => {
-        const res = await DeleteBookById(book.id);
-        if (res.status === 200) {
-            await success("Deleting Book")
-            history.push('/admin/book')
+        try {
+            const res = await DeleteBookById(book.id);
+            if (res.status === 200) {
+                await success("Deleting Book")
+                history.push('/admin/book')
+            }
         }
-        else {
+        catch {
             failed("Deleting Book")
         }
     }
@@ -62,7 +66,7 @@ const UpdateBook = () => {
         <div>
             <Form {...layout} onFinish={onFinish} validateMessages={validateMessages} style={{ border: '1px solid gray', width: '700px', margin: '20px auto', padding: '3rem', background: 'white' }}>
                 <Form.Item name={['book', 'id']} label="Name" rules={[{ required: true }]} initialValue={book.id}>
-                    <Input disabled/>
+                    <Input disabled />
                 </Form.Item>
                 <Form.Item name={['book', 'name']} label="Name" rules={[{ required: true }]} initialValue={book.name}>
                     <Input />
@@ -77,7 +81,7 @@ const UpdateBook = () => {
                     <TextArea rows={4} />
                 </Form.Item>
 
-                <Form.Item name={['book', 'categoryId']} label="Category" rules={[{ required: true }]} initialValue={[book.category,book.categoryId]}>
+                <Form.Item name={['book', 'categoryId']} label="Category" rules={[{ required: true }]} initialValue={[book.category, book.categoryId]}>
                     <Select
                     >
                         {categories.map((category) => {

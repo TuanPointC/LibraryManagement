@@ -1,8 +1,8 @@
-import { GetUserById, PutUser,DeleteUserById } from "../../../Api/UserApi"
+import { GetUserById, PutUser, DeleteUserById } from "../../../Api/UserApi"
 import { useState, useEffect } from "react"
 import { Spin, Form, Button, Input, Switch } from 'antd';
 import { useParams, useHistory } from "react-router-dom";
-import { failed,success } from "../../../component/Message";
+import { failed, success } from "../../../component/Message";
 
 const layout = {
     labelCol: { span: 4 },
@@ -29,25 +29,33 @@ const UpdateUser = () => {
     }, [id])
 
     const onFinish = async (values) => {
-        const res = await PutUser({ ...values.user, role: values.role ? 'admin' : 'normal' })
-        if (res.status === 200) {
-            await success("Updating")
-            history.push('/admin/user')
+        try {
+            const res = await PutUser({ ...values.user, role: values.role ? 'admin' : 'normal' })
+            if (res.status === 200) {
+                await success("Updating")
+                history.push('/admin/user')
+            }
+
         }
-        else{
+        catch {
             failed("Updating")
         }
     };
 
-    const onDelete= async ()=>{
-        const res =await DeleteUserById(user.id);
-        if (res.status === 200) {
-            await success("Deleting")
-            history.push('/admin/user')
+    const onDelete = async () => {
+        try {
+            const res = await DeleteUserById(user.id);
+            if (res.status === 200) {
+                await success("Deleting")
+                history.push('/admin/user')
+            }
         }
-        else{
-            failed("Deleting")
+        catch {
+            await failed("Deleting")
         }
+
+
+
     }
 
     if (!user) {
@@ -55,7 +63,7 @@ const UpdateUser = () => {
     }
     return (
         <div>
-            <Form {...layout} onFinish={onFinish} validateMessages={validateMessages} style={{ border: '1px solid gray', width: '700px', margin: '20px auto', padding: '3rem',background:'white' }}>
+            <Form {...layout} onFinish={onFinish} validateMessages={validateMessages} style={{ border: '1px solid gray', width: '700px', margin: '20px auto', padding: '3rem', background: 'white' }}>
 
                 <Form.Item name={['user', 'id']} label="Id" initialValue={user.id}>
                     <Input disabled />
@@ -75,8 +83,8 @@ const UpdateUser = () => {
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 16 }}>
-                    <div style={{display:'flex'}}>
-                        <Button type="primary" htmlType="submit" style={{marginRight:'2rem'}}>
+                    <div style={{ display: 'flex' }}>
+                        <Button type="primary" htmlType="submit" style={{ marginRight: '2rem' }}>
                             Save
                         </Button>
                         <Button type="danger" onClick={onDelete}>

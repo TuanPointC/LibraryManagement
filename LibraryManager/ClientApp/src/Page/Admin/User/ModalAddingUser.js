@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { Button, Modal, Form, Input, Switch } from 'antd';
 import { PostUser } from "../../../Api/UserApi";
 import { useState } from "react";
-import { failed,success } from "../../../component/Message";
+import { failed, success } from "../../../component/Message";
 const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 24 },
@@ -25,15 +25,18 @@ const ModalAddingUser = (props) => {
     };
     const onFinish = async (values) => {
         var userClone = { ...values.user, role: values.user.role ? 'admin' : 'normal', id: uuid() }
-        var res = await PostUser(userClone);
-        setIsModalVisible(false);
-        if (res.status === 200) {
-            await success("Adding user")
-            var listUser = [...props.user]
-            listUser.push(res.data)
-            props.setUser(listUser)
+        try {
+            var res = await PostUser(userClone);
+            setIsModalVisible(false);
+            if (res.status === 200) {
+                await success("Adding user")
+                var listUser = [...props.user]
+                listUser.push(res.data)
+                props.setUser(listUser)
+            }
+
         }
-        else {
+        catch {
             failed("Adding user")
         }
     };

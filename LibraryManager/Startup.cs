@@ -41,6 +41,8 @@ namespace LibraryManager
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.AddCors();
+
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             services.AddScoped<IBookRepo, BookRepo>();
@@ -78,6 +80,13 @@ namespace LibraryManager
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

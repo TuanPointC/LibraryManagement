@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { Button, Modal, Form, Input } from 'antd';
 import { PostCategory } from "../../../Api/CategoryApi";
 import { useState } from "react";
-import { failed,success } from "../../../component/Message";
+import { failed, success } from "../../../component/Message";
 const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 24 },
@@ -22,16 +22,18 @@ const ModalAddingCategory = (props) => {
     };
     const onFinish = async (values) => {
         var categoryClone = { ...values.category, id: uuid() }
-        var res = await PostCategory(categoryClone);
-        setIsModalVisible(false);
-        if (res.status === 200) {
-            await success()
-            var listCategories = [...props.categories]
-            listCategories.push(categoryClone)
-            props.setCategories(listCategories)
+        try {
+            var res = await PostCategory(categoryClone);
+            setIsModalVisible(false);
+            if (res.status === 200) {
+                await success("Adding")
+                var listCategories = [...props.categories]
+                listCategories.push(categoryClone)
+                props.setCategories(listCategories)
+            }
         }
-        else {
-            failed()
+        catch {
+            failed("Adding")
         }
     };
     return (

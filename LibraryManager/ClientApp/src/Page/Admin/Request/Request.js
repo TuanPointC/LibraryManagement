@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
-import { GetRequest,PutRequest } from "../../../Api/RequestApi";
+import { GetRequest, PutRequest } from "../../../Api/RequestApi";
 import { Spin, Table, Button } from 'antd';
-import {  useRouteMatch } from "react-router-dom";
-import { failed,success } from "../../../component/Message";
+import { failed, success } from "../../../component/Message";
 
 
 const Request = () => {
     const [requests, setRequest] = useState([])
     const [isLoading, setisLoading] = useState(false)
     const [rowWasEntered, setRowWasEntered] = useState(null)
-    const [reLoading,setReLoading] =useState(false)
-    let { url } = useRouteMatch();
+    const [reLoading, setReLoading] = useState(false)
 
     useEffect(() => {
         async function getRequest() {
@@ -20,15 +18,18 @@ const Request = () => {
         getRequest()
     }, [reLoading])
 
-    const handleFunction= async ()=>{
-        const result = await PutRequest({...rowWasEntered,status:rowWasEntered.status === "approve" ? "reject" : "approve"})
-        if(result.status===200){
-            await success(rowWasEntered.status === "approve" ? "reject" : "approve")
-            setReLoading(prev=>!prev)
+    const handleFunction = async () => {
+        try {
+            const result = await PutRequest({ ...rowWasEntered, status: rowWasEntered.status === "approve" ? "reject" : "approve" })
+            if (result.status === 200) {
+                await success(rowWasEntered.status === "approve" ? "reject" : "approve")
+                setReLoading(prev => !prev)
+            }
         }
-        else{
+        catch {
             failed(rowWasEntered.status === "approve" ? "reject" : "approve")
         }
+
     }
 
     const columns = [

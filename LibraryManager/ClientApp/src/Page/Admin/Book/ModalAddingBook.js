@@ -24,18 +24,19 @@ const ModalAddingBook = (props) => {
     };
     const onFinish = async (values) => {
         var bookClone = { ...values.book, id: uuid(), category: values.book.categoryId[0], categoryId: values.book.categoryId[1] }
-        var res = await PostBook(bookClone);
-        setIsModalVisible(false);
-        if (res.status === 200) {
-            await success("Adding book")
-            var listBooks = [...props.books]
-            listBooks.push(bookClone)
-            props.setBooks(listBooks)
+        try {
+            var res = await PostBook(bookClone);
+            setIsModalVisible(false);
+            if (res.status === 200) {
+                await success("Adding book")
+                var listBooks = [...props.books]
+                listBooks.push(bookClone)
+                props.setBooks(listBooks)
+            }
         }
-        else {
+        catch {
             failed("Adding book")
         }
-        console.log(values);
     };
 
     return (

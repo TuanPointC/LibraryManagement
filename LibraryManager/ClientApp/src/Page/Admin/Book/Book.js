@@ -19,37 +19,44 @@ const Book = () => {
         {
             title: 'Name',
             dataIndex: 'name',
+            ellipsis: true,
         },
         {
             title: 'Author',
             dataIndex: 'author',
+            ellipsis: true,
         },
         {
             title: 'Url Image',
             dataIndex: 'urlImage',
+            ellipsis: true,
         },
         {
             title: 'Summary',
             dataIndex: 'summary',
+            ellipsis: true,
         },
         {
             title: 'Category',
             dataIndex: 'categoryId',
+            ellipsis: true,
         },
         {
             title: 'Category',
             dataIndex: 'category',
+            ellipsis: true,
         },
         {
             title: "Actions",
+            with:80,
             align: 'right',
             size: "small",
             render: () => (
                 <Space size="large">
                     <Button type="primary"><Link to={`${url}/${rowWasEntered}`}>Edit</Link></Button>
                 </Space>
-            )
-
+            ),
+            
         }
     ];
     useEffect(() => {

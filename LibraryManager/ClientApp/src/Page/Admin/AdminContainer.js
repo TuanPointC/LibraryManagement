@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { Layout } from 'antd';
+import { Layout,Button } from 'antd';
 import Nav from './Nav/Nav';
 import User from './User/User';
 import Category from './Category/Category';
@@ -8,23 +8,29 @@ import Book from './Book/Book';
 import UpdateUser from "./User/UpdateUser";
 import UpdateCategory from "./Category/UpdateCategory";
 import UpdateBook from "./Book/UpdateBook";
+import { useState } from "react";
+import {  MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 
 const { Footer, Header, Content, Sider } = Layout;
 
 const AdminContainer = () => {
-
+    const [collapsed, setCollapsed] = useState(false)
+    const screenHeight = window.innerHeight - 90 - 60;
     return (
         <Layout className="layout App">
             <Router>
-                <Header>
+                <Header style={{background:'#40A9FF'}}>
                     This is Header
                 </Header>
                 <Layout>
-                    <Sider>
+                    <Sider collapsed={collapsed} >
+                        <Button type="primary" onClick={() => setCollapsed((prev) => !prev)} style={{ margin: 16 }}>
+                            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                        </Button>
                         <Nav />
                     </Sider>
 
-                    <Content className="site-layout" style={{ padding: '0 60px', marginTop: 10 }}>
+                    <Content className="site-layout" style={{ padding: '0 60px', marginTop: 10,minHeight: screenHeight + 'px'  }}>
                         <Switch style={{ padding: 24, minHeight: 380 }}>
                             <Route exact path="/admin/">
                                 <Redirect to="/admin/category" />
