@@ -1,15 +1,20 @@
 import { Modal, Image } from 'antd';
 import { useState } from 'react';
+import { success } from '../../../component/Message';
 const ModalBookDetail = (props) => {
-    console.log(props.book)
     const [confirmLoading, setConfirmLoading] = useState(false);
 
     const handleOk = () => {
         setConfirmLoading(true);
+        success("Adding book")
+        var allRequest= props.request
+        allRequest.push(props.book)
+        props.setRequest(allRequest)
         setTimeout(() => {
             props.setVisible(false);
             setConfirmLoading(false);
         }, 2000);
+
     };
     const handleCancel = () => {
         props.setVisible(false);
@@ -23,7 +28,7 @@ const ModalBookDetail = (props) => {
                 onOk={handleOk}
                 confirmLoading={confirmLoading}
                 onCancel={handleCancel}
-                okText="Borrow"
+                okText="Add to list"
                 width={1000}
             >
                 <div className="content" style={{display:'flex',justifyContent:'space-between'}}>

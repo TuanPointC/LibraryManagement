@@ -2,7 +2,11 @@ import axios from "axios"
 const URL = 'https://localhost:44340/api/book'
 
 export const GetBooks = () => {
-    const data= axios.get(URL)
+    const data= axios.get(URL,{headers:{
+        "Access-Control-Allow-Origin" : "*",
+        "Content-type": "Application/json",
+        'Authorization':'Bearer '+ localStorage.getItem('token')
+    }})
         .then((res) => res.data)
     return data
 }

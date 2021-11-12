@@ -53,6 +53,11 @@ namespace LibraryManager.Services
             return _mapper.Map<User, UserDto>(_userRepo.GetUserById(id));
         }
 
+        public UserDto GetUserByNameAndPassword(string name, string password)
+        {
+            return _mapper.Map<User, UserDto>(_userRepo.GetUserByNameAndPassword(name,password));
+        }
+
         public IEnumerable<UserDto> GetUsers()
         {
             Console.WriteLine("service");

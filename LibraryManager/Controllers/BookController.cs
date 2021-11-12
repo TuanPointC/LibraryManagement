@@ -1,6 +1,7 @@
 ﻿using LibraryManager.DTOs;
 using LibraryManager.Models;
 using LibraryManager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="admin")]
         public ActionResult CreateBook(BookDto book)
         {
             var signal = _bookServices.CreateBook(book);
@@ -54,6 +56,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public ActionResult UpdateBook(BookDto book)
         {
             var signal = _bookServices.UpdateBook(book);
@@ -65,6 +68,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteBook(Guid id)
         {
             var signal = _bookServices.DeleteBook(id);

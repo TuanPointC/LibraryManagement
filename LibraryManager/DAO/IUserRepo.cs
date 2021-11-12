@@ -13,5 +13,6 @@ namespace LibraryManager.DAO
         public void CreateUser(User user);
         public void UpdateUser(User user);
         public void DeleteUser(Guid id);
+        public User GetUserByNameAndPassword(string name, string password);
     }
 }

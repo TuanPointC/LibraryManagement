@@ -31,6 +31,19 @@ namespace LibraryManager.DAO
             var currentUser = _libraryManagerDbContext.Users.Where(b => b.Id == id).FirstOrDefault();
             return currentUser;
         }
+        
+        public User GetUserByNameAndPassword(string name, string password)
+        {
+            try
+            {
+                var currentUser = _libraryManagerDbContext.Users.Single(b => b.Name == name && b.Password == password);
+                return currentUser;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public IEnumerable<User> GetUsers()
         {

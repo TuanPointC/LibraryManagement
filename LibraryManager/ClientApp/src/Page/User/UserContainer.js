@@ -11,6 +11,7 @@ const { Footer, Header, Content, Sider } = Layout;
 const UserContainer = () => {
     const screenHeight = window.innerHeight - 60 - 60;
     const [collapsed, setCollapsed] = useState(false)
+    const [request,setRequest]=useState([])
 
     return (
         <Layout className="layout App">
@@ -28,13 +29,12 @@ const UserContainer = () => {
 
                     <Content className="site-layout" style={{ padding: '0 20px 0 20px', marginTop: 10, overflow: 'scroll', maxHeight: screenHeight + 'px', minHeight: screenHeight + 'px' }}>
                         <Switch style={{ padding: 24, minHeight: 380 }}>
-                            <Route exact path="/user">
-                                <Home />
+                            <Route exact path="/user/">
+                                <Home request={request} setRequest={setRequest}/>
                             </Route>
                             <Route exact path="/user/my-request">
-                                <MyRequest />
+                                <MyRequest request={request} setRequest={setRequest}/>
                             </Route>
-
                         </Switch>
                     </Content>
 

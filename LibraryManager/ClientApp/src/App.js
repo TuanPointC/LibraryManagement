@@ -4,6 +4,7 @@ import React from 'react';
 import AdminContainer from './Page/Admin/AdminContainer';
 import UserContainer from './Page/User/UserContainer';
 import Login from './Page/LogPage/Login';
+import NotMatch from './Page/NotMatch/NotMatch';
 
 
 function App() {
@@ -27,6 +28,10 @@ function App() {
 
         <Route path="/login">
           <Login/>
+        </Route>
+
+        <Route >
+          <NotMatch/>
         </Route>
 
       </Switch>

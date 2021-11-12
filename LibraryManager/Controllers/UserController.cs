@@ -1,5 +1,6 @@
 ﻿using LibraryManager.DTOs;
 using LibraryManager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult<IEnumerable<UserDto>> GetUsers()
         {
             var listUsers = _userServices.GetUsers();
@@ -30,6 +32,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public ActionResult GetUserById(Guid id)
         {
             var b = _userServices.GetUserById(id);
@@ -41,6 +44,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult CreateUser(UserDto user)
         {
             var signal = _userServices.CreateUser(user);
@@ -52,6 +56,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public ActionResult UpdateUser(UserDto user)
         {
             var signal = _userServices.UpdateUser(user);
@@ -63,6 +68,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteUser(Guid id)
         {
             var signal = _userServices.DeleteUser(id);

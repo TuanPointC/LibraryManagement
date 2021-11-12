@@ -6,7 +6,7 @@ import './Home.scss'
 import CardBook from './CardBook';
 
 
-const Home = () => {
+const Home = (props) => {
     const [books, setBooks] = useState([])
     const [categories, setCategories] = useState([])
     const [isLoading, setisLoading] = useState(true)
@@ -41,9 +41,7 @@ const Home = () => {
                                         md={{ span: 12, offset: 0 }}
                                         lg={{ span: 4, offset: 0 }}
                                     >
-                                        <CardBook book={book} />
-                                        
-
+                                        <CardBook book={book} request={props.request} setRequest={props.setRequest}/>
                                     </Col>
                                 )
                             })}

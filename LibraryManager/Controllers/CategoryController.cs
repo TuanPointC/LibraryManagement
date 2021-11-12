@@ -1,6 +1,7 @@
 ﻿using LibraryManager.DTOs;
 using LibraryManager.Models;
 using LibraryManager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult CreateCategory(CategoryDto category)
         {
             var signal = _categoryService.CreateCategory(category);
@@ -53,6 +55,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public ActionResult UpdateCategory(CategoryDto category)
         {
             var signal = _categoryService.UpdateCategory(category);
@@ -64,6 +67,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteCategory(Guid id)
         {
             var signal = _categoryService.DeleteCategory(id);

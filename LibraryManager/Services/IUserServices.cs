@@ -13,5 +13,6 @@ namespace LibraryManager.Services
         public bool CreateUser(UserDto book);
         public bool UpdateUser(UserDto book);
         public bool DeleteUser(Guid id);
+        public UserDto GetUserByNameAndPassword(string name, string password);
     }
 }

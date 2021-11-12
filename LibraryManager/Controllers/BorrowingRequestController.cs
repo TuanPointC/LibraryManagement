@@ -1,6 +1,7 @@
 ﻿using LibraryManager.DTOs;
 using LibraryManager.Models;
 using LibraryManager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public ActionResult UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             var signal = _borrowingRequestServices.UpdateBorrowingRequest(borrowingRequest);

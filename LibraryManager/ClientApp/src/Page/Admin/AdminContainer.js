@@ -10,12 +10,19 @@ import UpdateCategory from "./Category/UpdateCategory";
 import UpdateBook from "./Book/UpdateBook";
 import { useState } from "react";
 import {  MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import NotMatch from "../NotMatch/NotMatch";
 
 const { Footer, Header, Content, Sider } = Layout;
 
 const AdminContainer = () => {
     const [collapsed, setCollapsed] = useState(false)
     const screenHeight = window.innerHeight - 90 - 60;
+    const[canAccess,setCanAccess] =useState(false)
+    if(!canAccess){
+        return(
+            <NotMatch/>
+        )
+    }
     return (
         <Layout className="layout App">
             <Router>
@@ -44,7 +51,7 @@ const AdminContainer = () => {
                             <Route exact path="/admin/book">
                                 <Book />
                             </Route>
-                            <Route path="/admin/book/:id" >
+                            <Route exact path="/admin/book/:id" >
                                 <UpdateBook />
                             </Route>
                             <Route exact path="/admin/request" >
@@ -53,8 +60,11 @@ const AdminContainer = () => {
                             <Route exact path="/admin/user" >
                                 <User />
                             </Route>
-                            <Route path="/admin/user/:id" >
+                            <Route exact path="/admin/user/:id" >
                                 <UpdateUser />
+                            </Route>
+                            <Route>
+                                <NotMatch/>
                             </Route>
 
                         </Switch>

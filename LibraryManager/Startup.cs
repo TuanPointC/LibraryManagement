@@ -1,6 +1,8 @@
 using LibraryManager.DAO;
+using LibraryManager.Helper;
 using LibraryManager.Mapper;
 using LibraryManager.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,7 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Text;
 
 namespace LibraryManager
 {
@@ -27,6 +32,8 @@ namespace LibraryManager
         {
 
             services.AddControllersWithViews();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EFCore_1", Version = "v1" });
@@ -41,9 +48,32 @@ namespace LibraryManager
                 configuration.RootPath = "ClientApp/build";
             });
 
+            // Adding Authentication  
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+
+            // Adding Jwt Bearer  
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
+
             services.AddCors();
 
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+            services.AddTransient<ITokenService,JWTAuthentication>();
 
             services.AddScoped<IBookRepo, BookRepo>();
             services.AddScoped<ICategoryRepo, CategoryRepo>();
