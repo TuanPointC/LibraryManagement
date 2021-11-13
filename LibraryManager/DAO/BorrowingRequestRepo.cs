@@ -31,16 +31,16 @@ namespace LibraryManager.DAO
                     }
 
                     // set condition maximum 5 books per user
-                    var allRequest = _libraryManagerDbContext.BorrowingRequests.Where(r => r.WhoRequestId == borrowingRequest.WhoRequestId && r.RequestedDate.Month == DateTime.Now.Month);
-                    var totalBook = 0;
-                    foreach (var request in allRequest)
-                    {
-                        totalBook += _libraryManagerDbContext.BorrowingRequestDetails.Where(dt => dt.BorrowingRequestId == request.Id).Count();
-                    }
-                    if(totalBook + borrowingRequest.ListBooks.Count > 5)
-                    {
-                        throw new Exception("Cannot over 5 books per user");
-                    }
+                    //var allRequest = _libraryManagerDbContext.BorrowingRequests.Where(r => r.WhoRequestId == borrowingRequest.WhoRequestId && r.RequestedDate.Month == DateTime.Now.Month);
+                    //var totalBook = 0;
+                    //foreach (var request in allRequest)
+                    //{
+                    //    totalBook += _libraryManagerDbContext.BorrowingRequestDetails.Where(dt => dt.BorrowingRequestId == request.Id).Count();
+                    //}
+                    //if(totalBook + borrowingRequest.ListBooks.Count > 5)
+                    //{
+                    //    throw new Exception("Cannot over 5 books per user");
+                    //}
 
                     // Add request
                     var listBorrowingDetail = new List<BorrowingRequestDetail>();
