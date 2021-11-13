@@ -7,9 +7,9 @@ const ModalBookDetail = (props) => {
     const handleOk = () => {
         setConfirmLoading(true);
         success("Adding book")
-        var allRequest= props.request
+        var allRequest= props.booksRequest
         allRequest.push(props.book)
-        props.setRequest(allRequest)
+        props.setBooksRequest(allRequest)
         setTimeout(() => {
             props.setVisible(false);
             setConfirmLoading(false);
@@ -28,7 +28,7 @@ const ModalBookDetail = (props) => {
                 onOk={handleOk}
                 confirmLoading={confirmLoading}
                 onCancel={handleCancel}
-                okText="Add to list"
+                okText="Add to temporary list"
                 width={1000}
             >
                 <div className="content" style={{display:'flex',justifyContent:'space-between'}}>

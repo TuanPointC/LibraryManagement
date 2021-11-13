@@ -20,8 +20,8 @@ const CardBook = (props) => {
                 visible={visible}
                 setVisible={setVisible}
                 book={props.book}
-                request={props.request}
-                setRequest={props.setRequest}
+                booksRequest={props.booksRequest}
+                setBooksRequest={props.setBooksRequest}
             />
         </>
     )

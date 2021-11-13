@@ -15,6 +15,7 @@ namespace LibraryManager.Models
         public string Password { get; set; }
         public string Role{get; set;}
 
-        public ICollection<BorrowingRequest> BorrowingRequests { get; set; }
+        public ICollection<BorrowingRequest> BorrowingRequest { get; set; }
+        public ICollection<BorrowingRequest> BorrowingUpdate { get; set; }
     }
 }

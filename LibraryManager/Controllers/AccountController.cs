@@ -3,6 +3,7 @@ using LibraryManager.DTOs;
 using LibraryManager.Helper;
 using LibraryManager.Models;
 using LibraryManager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -17,6 +18,7 @@ namespace LibraryManager.Controllers
 {
     [ApiController]
     [Route("api/account")]
+    [AllowAnonymous]
     public class AccountController : ControllerBase
     {
         private readonly IUserServices _userService;
@@ -30,7 +32,7 @@ namespace LibraryManager.Controllers
         }
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login([FromBody] LoginModel user)
+        public IActionResult Login(LoginModel user)
         {
             var currentUser = _userService.GetUserByNameAndPassword(user.Name, user.Password);
             if (currentUser!=null)

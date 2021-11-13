@@ -43,7 +43,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult CreateCategory(CategoryDto category)
         {
             var signal = _categoryService.CreateCategory(category);
@@ -55,7 +55,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult UpdateCategory(CategoryDto category)
         {
             var signal = _categoryService.UpdateCategory(category);
@@ -67,7 +67,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult DeleteCategory(Guid id)
         {
             var signal = _categoryService.DeleteCategory(id);

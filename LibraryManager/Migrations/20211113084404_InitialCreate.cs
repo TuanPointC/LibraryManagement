@@ -62,10 +62,10 @@ namespace LibraryManager.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WhoRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 11, 10, 10, 50, 11, 109, DateTimeKind.Local).AddTicks(6062)),
+                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 11, 13, 15, 44, 3, 990, DateTimeKind.Local).AddTicks(4635)),
                     HandledDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WhoHandleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    WhoUpdateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,8 +74,12 @@ namespace LibraryManager.Migrations
                         name: "FK_BorrowingRequest_Users_WhoRequestId",
                         column: x => x.WhoRequestId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_BorrowingRequest_Users_WhoUpdateId",
+                        column: x => x.WhoUpdateId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -112,6 +116,11 @@ namespace LibraryManager.Migrations
                 name: "IX_BorrowingRequest_WhoRequestId",
                 table: "BorrowingRequest",
                 column: "WhoRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BorrowingRequest_WhoUpdateId",
+                table: "BorrowingRequest",
+                column: "WhoUpdateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BorrowingRequestDetails_BorrowingRequestId",

@@ -1,9 +1,7 @@
 import { Table, Space, Button } from 'antd';
+import { useState,useEffect } from 'react';
+import { GetRequest } from '../../../Api/RequestApi';
 const columns = [
-    {
-        title: 'Id',
-        dataIndex: 'id',
-    },
     {
         title: 'Name',
         dataIndex: 'name',
@@ -12,26 +10,6 @@ const columns = [
     {
         title: 'Author',
         dataIndex: 'author',
-        ellipsis: true,
-    },
-    {
-        title: 'Url Image',
-        dataIndex: 'urlImage',
-        ellipsis: true,
-    },
-    {
-        title: 'Summary',
-        dataIndex: 'summary',
-        ellipsis: true,
-    },
-    {
-        title: 'Category',
-        dataIndex: 'categoryId',
-        ellipsis: true,
-    },
-    {
-        title: 'Category',
-        dataIndex: 'category',
         ellipsis: true,
     },
     {
@@ -47,17 +25,22 @@ const columns = [
 
     }
 ];
-const MyRequest = (props) => {
+const ListRequest = () => {
+    const [requests,setListRequest] = useState([])
+    useEffect(()=>{
+
+    },[])
     return (
         <div>
-            <Button type="primary">Confirm</Button>
+            <h1>List Requests</h1>
             <Table
                 columns={columns}
-                dataSource={props.request}
+                dataSource={requests}
                 bordered style={{ margin: '20px 0' }}
                 rowKey="id"
             />
         </div>
     )
 }
-export default MyRequest;
+
+export default ListRequest

@@ -20,7 +20,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult<IEnumerable<UserDto>> GetUsers()
         {
             var listUsers = _userServices.GetUsers();
@@ -32,7 +32,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult GetUserById(Guid id)
         {
             var b = _userServices.GetUserById(id);
@@ -44,7 +44,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+       // [Authorize(Roles = "admin")]
         public ActionResult CreateUser(UserDto user)
         {
             var signal = _userServices.CreateUser(user);
@@ -56,7 +56,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult UpdateUser(UserDto user)
         {
             var signal = _userServices.UpdateUser(user);
@@ -68,7 +68,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult DeleteUser(Guid id)
         {
             var signal = _userServices.DeleteUser(id);

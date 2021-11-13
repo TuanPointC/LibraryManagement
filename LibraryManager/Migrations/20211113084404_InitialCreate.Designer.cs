@@ -4,14 +4,16 @@ using LibraryManager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LibraryManager.Migrations
 {
     [DbContext(typeof(LibraryManagerDbContext))]
-    partial class LibraryManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211113084404_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,13 +61,13 @@ namespace LibraryManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("HandledDate")
+                    b.Property<DateTime>("HandledDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("RequestedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 13, 17, 8, 4, 15, DateTimeKind.Local).AddTicks(5808));
+                        .HasDefaultValue(new DateTime(2021, 11, 13, 15, 44, 3, 990, DateTimeKind.Local).AddTicks(4635));
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -74,7 +76,7 @@ namespace LibraryManager.Migrations
                     b.Property<Guid>("WhoRequestId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("WhoUpdateId")
+                    b.Property<Guid>("WhoUpdateId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -171,7 +173,8 @@ namespace LibraryManager.Migrations
                     b.HasOne("LibraryManager.Models.User", "UserUpdate")
                         .WithMany("BorrowingUpdate")
                         .HasForeignKey("WhoUpdateId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("UserRequest");
 

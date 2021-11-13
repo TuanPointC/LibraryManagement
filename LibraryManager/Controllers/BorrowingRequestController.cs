@@ -45,6 +45,10 @@ namespace LibraryManager.Controllers
         [HttpPost]
         public ActionResult CreateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
+            if(borrowingRequest.ListBooks.Count>5)
+            {
+                return BadRequest("Only borrow maximum 5 books");
+            }
             var signal = _borrowingRequestServices.CreateBorrowingRequest(borrowingRequest);
             if (signal)
             {
@@ -53,8 +57,9 @@ namespace LibraryManager.Controllers
             return BadRequest();
         }
 
+
         [HttpPut]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public ActionResult UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             var signal = _borrowingRequestServices.UpdateBorrowingRequest(borrowingRequest);

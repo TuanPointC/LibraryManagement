@@ -13,9 +13,10 @@ namespace LibraryManager.Models
         public Guid WhoRequestId { get; set; }
         public User UserRequest { get; set; }
         public DateTime RequestedDate { get; set; }
-        public DateTime HandledDate { get; set; }
+        public DateTime? HandledDate { get; set; }
         public string Status { get; set; }
-        public Guid WhoHandleId { get; set; }
+        public Guid? WhoUpdateId { get; set; }
+        public User UserUpdate { get; set; }
         public ICollection<BorrowingRequestDetail> BorrowingRequestDetails{ get; set; }
 
     }

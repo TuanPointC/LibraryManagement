@@ -17,7 +17,7 @@ const { Footer, Header, Content, Sider } = Layout;
 const AdminContainer = () => {
     const [collapsed, setCollapsed] = useState(false)
     const screenHeight = window.innerHeight - 90 - 60;
-    const[canAccess,setCanAccess] =useState(false)
+    const[canAccess,setCanAccess] =useState(true)
     if(!canAccess){
         return(
             <NotMatch/>

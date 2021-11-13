@@ -3,7 +3,7 @@ import {  MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Layout,Button } from 'antd';
 import Nav from './Nav/Nav';
 import Home from "./Home/Home";
-import MyRequest from "./MyRequest/MyRequest";
+import MyRequestContainer from "./MyRequest/MyRequestContainer";
 import { useState } from "react";
 import HeaderComponent from "../../component/HeaderComponent";
 
@@ -11,7 +11,7 @@ const { Footer, Header, Content, Sider } = Layout;
 const UserContainer = () => {
     const screenHeight = window.innerHeight - 60 - 60;
     const [collapsed, setCollapsed] = useState(false)
-    const [request,setRequest]=useState([])
+    const [booksRequest,setBooksRequest]=useState([])
 
     return (
         <Layout className="layout App">
@@ -30,10 +30,10 @@ const UserContainer = () => {
                     <Content className="site-layout" style={{ padding: '0 20px 0 20px', marginTop: 10, overflow: 'scroll', maxHeight: screenHeight + 'px', minHeight: screenHeight + 'px' }}>
                         <Switch style={{ padding: 24, minHeight: 380 }}>
                             <Route exact path="/user/">
-                                <Home request={request} setRequest={setRequest}/>
+                                <Home booksRequest={booksRequest} setBooksRequest={setBooksRequest}/>
                             </Route>
                             <Route exact path="/user/my-request">
-                                <MyRequest request={request} setRequest={setRequest}/>
+                                <MyRequestContainer booksRequest={booksRequest} setBooksRequest={setBooksRequest}/>
                             </Route>
                         </Switch>
                     </Content>

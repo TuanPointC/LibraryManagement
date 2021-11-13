@@ -41,7 +41,7 @@ const Home = (props) => {
                                         md={{ span: 12, offset: 0 }}
                                         lg={{ span: 4, offset: 0 }}
                                     >
-                                        <CardBook book={book} request={props.request} setRequest={props.setRequest}/>
+                                        <CardBook book={book} booksRequest={props.booksRequest} setBooksRequest={props.setBooksRequest}/>
                                     </Col>
                                 )
                             })}

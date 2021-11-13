@@ -13,5 +13,6 @@ namespace LibraryManager.DTOs
         public DateTime HandledDate { get; set; }
         public string Status { get; set; }
         public Guid WhoHandleId { get; set; }
+        public ICollection<BookDto> ListBooks { get; set; }
     }
 }

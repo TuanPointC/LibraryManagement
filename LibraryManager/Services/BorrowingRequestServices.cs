@@ -24,7 +24,7 @@ namespace LibraryManager.Services
             {
                 if (borrowingRequest != null)
                 {
-                    _borrowingRequestRepo.CreateBorrowingRequest(_mapper.Map<BorrowingRequestDto,BorrowingRequest>(borrowingRequest));
+                    _borrowingRequestRepo.CreateBorrowingRequest(borrowingRequest);
                     return true;
                 }
                 return false;
@@ -34,6 +34,7 @@ namespace LibraryManager.Services
                 return false;
             }
         }
+
 
         public bool DeleteBorrowingRequest(Guid id)
         {

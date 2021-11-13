@@ -36,7 +36,7 @@ namespace LibraryManager.DAO
         {
             try
             {
-                var currentUser = _libraryManagerDbContext.Users.Single(b => b.Name == name && b.Password == password);
+                var currentUser = _libraryManagerDbContext.Users.Where(b => b.Name == name && b.Password == password).FirstOrDefault();
                 return currentUser;
             }
             catch

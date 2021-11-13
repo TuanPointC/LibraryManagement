@@ -28,6 +28,8 @@ namespace LibraryManager
                     .HasMaxLength(200);
                 entity.Property(p => p.Password)
                     .IsRequired();
+                entity.HasMany(x => x.BorrowingRequest).WithOne(x => x.UserRequest).HasForeignKey(x => x.WhoRequestId).OnDelete(DeleteBehavior.NoAction);
+                entity.HasMany(x => x.BorrowingUpdate).WithOne(x => x.UserUpdate).HasForeignKey(x => x.WhoUpdateId).OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<Book>(entity =>
@@ -61,7 +63,8 @@ namespace LibraryManager
                 entity.Property(p => p.Status).IsRequired();
                 entity.Property(p => p.WhoRequestId).IsRequired();
                 entity.Property(p => p.RequestedDate).HasDefaultValue(DateTime.Now);
-                entity.HasOne(p => p.UserRequest).WithMany(p => p.BorrowingRequests).HasForeignKey(p => p.WhoRequestId);
+                entity.Property(p => p.WhoUpdateId).IsRequired(false);
+                entity.Property(p => p.HandledDate).IsRequired(false);
             });
 
             modelBuilder.Entity<Category>(entity =>
