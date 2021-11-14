@@ -10,15 +10,16 @@ export const GetRequest = () => {
 }
 
 export const PostRequest = async (request) => {
-    const result = await axios.post(URL,request,{headers:{
+   const data  = axios.post(URL,request,{headers:{
         'Authorization':'Bearer '+ localStorage.getItem('token')
     }})
     .then((res)=>res)
-    return result
+    .catch((err)=>err.response.data)
+    return data
 }
 
 
-export const GetRequestId =async (id)=>{
+export const GetRequestUserId =async (id)=>{
     const result = await axios.get(URL+'/'+id,{headers:{
         'Authorization':'Bearer '+ localStorage.getItem('token')
     }})
@@ -31,6 +32,7 @@ export const PutRequest =async (request)=>{
         'Authorization':'Bearer '+ localStorage.getItem('token')
     }})
         .then ((res)=>res)
+        .catch((err)=>err.response.data)
     return result
 }
 
@@ -39,5 +41,6 @@ export const DeleteRequestById =async (id)=>{
         'Authorization':'Bearer '+ localStorage.getItem('token')
     }})
         .then ((res)=>res)
+        .catch((err)=>err.response.data)
     return result
 }

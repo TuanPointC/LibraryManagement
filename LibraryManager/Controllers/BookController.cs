@@ -43,40 +43,40 @@ namespace LibraryManager.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles ="admin")]
+        [Authorize(Roles ="admin")]
         public ActionResult CreateBook(BookDto book)
         {
             var signal = _bookServices.CreateBook(book);
-            if (signal)
+            if (signal=="ok")
             {
                 //Console.WriteLine(book.Category.Name);
                 return Ok(book);
             }
-            return BadRequest();
+            return BadRequest(signal);
         }
 
         [HttpPut]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public ActionResult UpdateBook(BookDto book)
         {
             var signal = _bookServices.UpdateBook(book);
-            if (signal)
+            if (signal=="ok")
             {
                 return Ok();
             }
-            return BadRequest();
+            return BadRequest(signal);
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteBook(Guid id)
         {
             var signal = _bookServices.DeleteBook(id);
-            if (signal)
+            if (signal=="ok")
             {
                 return Ok();
             }
-            return BadRequest();
+            return BadRequest(signal);
         }
 
     }

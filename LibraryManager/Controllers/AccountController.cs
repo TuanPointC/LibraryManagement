@@ -35,31 +35,29 @@ namespace LibraryManager.Controllers
         public IActionResult Login(LoginModel user)
         {
             var currentUser = _userService.GetUserByNameAndPassword(user.Name, user.Password);
-            if (currentUser!=null)
+            if (currentUser != null)
             {
                 var token = _JWTAuthentication.GenerateToken(_mapper.Map<UserDto, User>(currentUser));
                 return Ok(
                   new
                   {
-                      token=token,
-                      userName= currentUser.Name,
-                      userId=currentUser.Id,
-                      userEmail=currentUser.Email,
-                  }  
+                      token = token,
+                      userName = currentUser.Name,
+                      userId = currentUser.Id,
+                      userEmail = currentUser.Email,
+                      userRole = currentUser.Role
+                  }
                   );
             }
             return Unauthorized();
         }
 
-        
 
         public class LoginModel
         {
             public string Name { get; set; }
             public string Password { get; set; }
         }
-
-        
 
     }
 }

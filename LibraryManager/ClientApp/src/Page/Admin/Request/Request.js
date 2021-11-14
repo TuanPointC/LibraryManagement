@@ -19,17 +19,14 @@ const Request = () => {
     }, [reLoading])
 
     const handleFunction = async () => {
-        try {
-            const result = await PutRequest({ ...rowWasEntered, status: rowWasEntered.status === "approve" ? "reject" : "approve" })
-            if (result.status === 200) {
-                await success(rowWasEntered.status === "approve" ? "reject" : "approve")
-                setReLoading(prev => !prev)
-            }
+        const result = await PutRequest({ ...rowWasEntered, status: rowWasEntered.status === "approve" ? "reject" : "approve" })
+        if (result.status === 200) {
+            await success(rowWasEntered.status === "approve" ? "Reject request" : "Approve request")
+            setReLoading(prev => !prev)
         }
-        catch {
-            failed(rowWasEntered.status === "approve" ? "reject" : "approve")
+        else {
+            failed(result)
         }
-
     }
 
     const columns = [
@@ -43,7 +40,7 @@ const Request = () => {
         },
         {
             title: 'Requesting Date ',
-            dataIndex: 'requestDate',
+            dataIndex: 'requestedDate',
         },
         {
             title: 'Handling Date',

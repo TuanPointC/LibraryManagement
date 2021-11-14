@@ -19,33 +19,33 @@ namespace LibraryManager.Services
             _mapper = mapper;
         }
 
-        public bool CreateBook(BookDto book)
+        public string CreateBook(BookDto book)
         {
             try
             {
                 if (book != null)
                 {
                     _bookRepo.CreateBook(_mapper.Map<BookDto, Book>(book));
-                    return true;
+                    return "ok";
                 }
-                return false;
+                return "Book is not null";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
 
-        public bool DeleteBook(Guid id)
+        public string DeleteBook(Guid id)
         {
             try
             {
                 _bookRepo.DeleteBook(id);
-                return true;
+                return "ok";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
 
@@ -59,20 +59,20 @@ namespace LibraryManager.Services
             return _mapper.Map<IEnumerable<Book>, IEnumerable<BookDto>>(_bookRepo.GetBooks());
         }
 
-        public bool UpdateBook(BookDto book)
+        public string UpdateBook(BookDto book)
         {
             try
             {
                 if (book != null)
                 {
                     _bookRepo.UpdateBook(_mapper.Map<BookDto,Book>(book));
-                    return true;
+                    return "ok";
                 }
-                return false;
+                return "Book is not null";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
     }

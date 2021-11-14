@@ -18,33 +18,33 @@ namespace LibraryManager.Services
             _userRepo = userRepo;
             _mapper = mapper;
         }
-        public bool CreateUser(UserDto user)
+        public string CreateUser(UserDto user)
         {
             try
             {
                 if (user != null)
                 {
                     _userRepo.CreateUser(_mapper.Map<UserDto,User>(user));
-                    return true;
+                    return "ok";
                 }
-                return false;
+                return "User is not null";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
 
-        public bool DeleteUser(Guid id)
+        public string DeleteUser(Guid id)
         {
             try
             {
                 _userRepo.DeleteUser(id);
-                return true;
+                return "ok";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
 
@@ -64,20 +64,20 @@ namespace LibraryManager.Services
             return _mapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(_userRepo.GetUsers());
         }
 
-        public bool UpdateUser(UserDto user)
+        public string UpdateUser(UserDto user)
         {
             try
             {
                 if (user != null)
                 {
                     _userRepo.UpdateUser(_mapper.Map<UserDto, User>(user));
-                    return true;
+                    return "ok";
                 }
-                return false;
+                return "User is not null";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
     }

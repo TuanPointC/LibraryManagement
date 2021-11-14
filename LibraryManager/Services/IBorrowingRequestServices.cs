@@ -11,8 +11,9 @@ namespace LibraryManager.Services
     {
         public IEnumerable<BorrowingRequestDto> GetBorrowingRequests();
         public BorrowingRequestDto GetBorrowingRequestById(Guid id);
-        public bool CreateBorrowingRequest(BorrowingRequestDto borrowingRequest);
-        public bool UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest);
-        public bool DeleteBorrowingRequest(Guid id);
+        public string CreateBorrowingRequest(BorrowingRequestDto borrowingRequest);
+        public string UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest);
+        public string DeleteBorrowingRequest(Guid id);
+        public IEnumerable<RequestUser> GetBorrowingRequestByUserId(Guid id);
     }
 }

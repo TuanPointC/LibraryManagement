@@ -25,26 +25,26 @@ namespace LibraryManager.Services
                 if (category != null)
                 {
                     _categoryRepo.CreateCategory(_mapper.Map<CategoryDto,Category>(category));
-                    return "Ok";
+                    return "ok";
                 }
                 return "Category must not null";
             }
             catch(Exception e)
             {
-                return e.ToString();
+                return e.Message;
             }
         }
 
-        public bool DeleteCategory(Guid id)
+        public string DeleteCategory(Guid id)
         {
             try
             {
                 _categoryRepo.DeleteCategory(id);
-                return true;
+                return "ok";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
 
@@ -58,20 +58,20 @@ namespace LibraryManager.Services
             return _mapper.Map<Category, CategoryDto>(_categoryRepo.GetCategoryById(id));
         }
 
-        public bool UpdateCategory(CategoryDto category)
+        public string UpdateCategory(CategoryDto category)
         {
             try
             {
                 if (category != null)
                 {
                     _categoryRepo.UpdateCategory(_mapper.Map<CategoryDto,Category>(category));
-                    return true;
+                    return "ok";
                 }
-                return false;
+                return "category is not null";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
     }

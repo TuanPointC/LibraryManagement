@@ -14,6 +14,7 @@ export const PostCategory = async (book) => {
         'Authorization':'Bearer '+ localStorage.getItem('token')
     }})
     .then((res)=>res)
+    .catch((err)=>err.response.data)
     return result
 }
 
@@ -30,6 +31,7 @@ export const PutCategory =async (book)=>{
         'Authorization':'Bearer '+ localStorage.getItem('token')
     }})
         .then ((res)=>res)
+        .catch((err)=>err.response.data)
     return result
 }
 
@@ -38,5 +40,6 @@ export const DeleteCategoryById =async (id)=>{
         'Authorization':'Bearer '+ localStorage.getItem('token')
     }})
         .then ((res)=>res)
+        .catch((err)=>err.response.data)
     return result
 }

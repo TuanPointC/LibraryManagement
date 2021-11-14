@@ -22,19 +22,19 @@ const ModalAddingCategory = (props) => {
     };
     const onFinish = async (values) => {
         var categoryClone = { ...values.category, id: uuid() }
-        try {
-            var res = await PostCategory(categoryClone);
+
+        var res = await PostCategory(categoryClone);
+        if (res.status === 200) {
             setIsModalVisible(false);
-            if (res.status === 200) {
-                await success("Adding")
-                var listCategories = [...props.categories]
-                listCategories.push(categoryClone)
-                props.setCategories(listCategories)
-            }
+            await success("Adding Category")
+            var listCategories = [...props.categories]
+            listCategories.push(categoryClone)
+            props.setCategories(listCategories)
         }
-        catch {
-            failed("Adding")
+        else {
+            failed(res)
         }
+        
     };
     return (
         <div>

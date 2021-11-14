@@ -34,30 +34,29 @@ const UpdateBook = () => {
     }, [id])
 
     const onFinish = async (values) => {
-        try {
-            var res = await PutBook({ ...values.book, category: values.book.categoryId[0], categoryId: values.book.categoryId[1] })
-            if (res.status === 200) {
-                await success("Updating Book")
-                history.push('/admin/book')
-            }
+        var res = await PutBook({ ...values.book, category: values.book.categoryId[0], categoryId: values.book.categoryId[1] })
+        if (res.status === 200) {
+            await success("Updating Book")
+            history.push('/admin/book')
         }
-        catch {
-            await failed("Updating Book")
+        else {
+            await failed(res)
         }
+
     };
 
     const onDelete = async () => {
-        try {
-            const res = await DeleteBookById(book.id);
-            if (res.status === 200) {
-                await success("Deleting Book")
-                history.push('/admin/book')
-            }
+
+        const res = await DeleteBookById(book.id);
+        if (res.status === 200) {
+            await success("Deleting Book")
+            history.push('/admin/book')
         }
-        catch {
-            failed("Deleting Book")
+        else {
+            failed(res)
         }
     }
+    
 
     if (!book) {
         return <Spin size="large" style={{ position: 'absolute', top: '50%', left: '50%', translate: '-50%,-50%' }} />

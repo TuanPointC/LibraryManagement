@@ -23,31 +23,35 @@ namespace LibraryManager.DAO
             {
                 try
                 {
+                    if (borrowingRequest.ListBooks.Count < 1)
+                    {
+                        throw new Exception("List books is not null");
+                    }
                     // set condition; maximum 3 requests per month
                     var numberOfRequest = _libraryManagerDbContext.BorrowingRequests.Where(r => r.WhoRequestId == borrowingRequest.WhoRequestId && r.RequestedDate.Month == DateTime.Now.Month).Count();
-                    if (numberOfRequest > 3)
+                    if (numberOfRequest > 2)
                     {
-                       throw new Exception("Cannot Over 3 requests per month");
+                        throw new Exception("Cannot Over 3 requests per month");
                     }
 
                     // set condition maximum 5 books per user
-                    //var allRequest = _libraryManagerDbContext.BorrowingRequests.Where(r => r.WhoRequestId == borrowingRequest.WhoRequestId && r.RequestedDate.Month == DateTime.Now.Month);
-                    //var totalBook = 0;
-                    //foreach (var request in allRequest)
-                    //{
-                    //    totalBook += _libraryManagerDbContext.BorrowingRequestDetails.Where(dt => dt.BorrowingRequestId == request.Id).Count();
-                    //}
-                    //if(totalBook + borrowingRequest.ListBooks.Count > 5)
-                    //{
-                    //    throw new Exception("Cannot over 5 books per user");
-                    //}
+                    var allRequest = _libraryManagerDbContext.BorrowingRequests.Where(r => r.WhoRequestId == borrowingRequest.WhoRequestId).ToList();
+                    var totalBook = 0;
+                    foreach (var request in allRequest)
+                    {
+                        totalBook += _libraryManagerDbContext.BorrowingRequestDetails.Where(dt => dt.BorrowingRequestId == request.Id).Count();
+                    }
+                    if (totalBook + borrowingRequest.ListBooks.Count > 5)
+                    {
+                        throw new Exception("Cannot over 5 books per user");
+                    }
 
                     // Add request
                     var listBorrowingDetail = new List<BorrowingRequestDetail>();
                     _libraryManagerDbContext.BorrowingRequests.Add(_mapper.Map<BorrowingRequestDto, BorrowingRequest>(borrowingRequest));
 
                     foreach (var book in borrowingRequest.ListBooks)
-                    { 
+                    {
                         var requestDetail = new BorrowingRequestDetail
                         {
                             Id = Guid.NewGuid(),
@@ -60,14 +64,12 @@ namespace LibraryManager.DAO
                     _libraryManagerDbContext.SaveChanges();
                     transaction.Commit();
                 }
-                catch
+                catch (Exception e)
                 {
                     transaction.Rollback();
-                    throw new Exception("failed");
+                    throw e;
                 }
             }
-
-
         }
 
 
@@ -81,6 +83,41 @@ namespace LibraryManager.DAO
         public BorrowingRequest GetBorrowingRequestById(Guid id)
         {
             return _libraryManagerDbContext.BorrowingRequests.Where(b => b.Id == id).FirstOrDefault();
+        }
+
+        public IEnumerable<RequestUser> GetBorrowingRequestByUserId(Guid id)
+        {
+            var listRequest = _libraryManagerDbContext.BorrowingRequests.Where(rq => rq.WhoRequestId == id);
+            if (listRequest.ToList().Count>0)
+            {
+                var joinRequestAndDetail = _libraryManagerDbContext.BorrowingRequestDetails.Join(
+                listRequest,
+                dt => dt.BorrowingRequestId,
+                rq => rq.Id,
+                (dt, rq) => new
+                {
+                    RequestedDate = rq.RequestedDate,
+                    Status = rq.Status,
+                    BookId = dt.BookId
+                }
+             );
+
+                var joinWithBook = _libraryManagerDbContext.Books.Join(
+                    joinRequestAndDetail,
+                    book => book.Id,
+                    requestDetail => requestDetail.BookId,
+                    (book, requestDetail) => new RequestUser
+                    {
+                        RequestedDate = requestDetail.RequestedDate,
+                        Status = requestDetail.Status,
+                        BookName = book.Name
+                    }
+                 );
+
+                return joinWithBook;
+            }
+            return null;
+
         }
 
         public IEnumerable<BorrowingRequest> GetBorrowingRequests()

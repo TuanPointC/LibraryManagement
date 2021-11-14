@@ -18,34 +18,33 @@ namespace LibraryManager.Services
             _borrowingRequestRepo = borrowingRequestRepo;
             _mapper = mapper;
         }
-        public bool CreateBorrowingRequest(BorrowingRequestDto borrowingRequest)
+        public string CreateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             try
             {
                 if (borrowingRequest != null)
                 {
                     _borrowingRequestRepo.CreateBorrowingRequest(borrowingRequest);
-                    return true;
+                    return "ok";
                 }
-                return false;
+                return "borrowing request is not null";
             }
-            catch
+            catch(Exception e)
             {
-                return false;
+                return e.Message;
             }
         }
 
-
-        public bool DeleteBorrowingRequest(Guid id)
+        public string DeleteBorrowingRequest(Guid id)
         {
             try
             {
                 _borrowingRequestRepo.DeleteBorrowingRequest(id);
-                return true;
+                return "ok";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.ToString();
             }
         }
 
@@ -54,25 +53,30 @@ namespace LibraryManager.Services
             return _mapper.Map<BorrowingRequest, BorrowingRequestDto > (_borrowingRequestRepo.GetBorrowingRequestById(id));
         }
 
+        public IEnumerable<RequestUser> GetBorrowingRequestByUserId(Guid id)
+        {
+            return _borrowingRequestRepo.GetBorrowingRequestByUserId(id);
+        }
+
         public IEnumerable<BorrowingRequestDto> GetBorrowingRequests()
         {
             return _mapper.Map<IEnumerable<BorrowingRequest>,IEnumerable<BorrowingRequestDto>>(_borrowingRequestRepo.GetBorrowingRequests());
         }
 
-        public bool UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
+        public string UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             try
             {
                 if (borrowingRequest != null)
                 {
                     _borrowingRequestRepo.UpdateBorrowingRequest(_mapper.Map<BorrowingRequestDto,BorrowingRequest>(borrowingRequest));
-                    return true;
+                    return "ok";
                 }
-                return false;
+                return "borrowing request is not null";
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                return e.ToString();
             }
         }
     }

@@ -11,8 +11,8 @@ namespace LibraryManager.Services
     {
         public IEnumerable<BookDto> GetBooks();
         public BookDto GetBookById(Guid id);
-        public bool CreateBook(BookDto book);
-        public bool UpdateBook(BookDto book);
-        public bool DeleteBook(Guid id);
+        public string CreateBook(BookDto book);
+        public string UpdateBook(BookDto book);
+        public string DeleteBook(Guid id);
     }
 }

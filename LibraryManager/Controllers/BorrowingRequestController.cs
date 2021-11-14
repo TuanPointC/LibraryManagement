@@ -21,6 +21,7 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult<IEnumerable<BorrowingRequestDto>> GetBorrowingRequest()
         {
             var listBorrowingRequest= _borrowingRequestServices.GetBorrowingRequests();
@@ -32,9 +33,10 @@ namespace LibraryManager.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetlistBorrowingRequestById(Guid id)
+        //[Authorize(Roles = "admin")]
+        public ActionResult GetlistBorrowingRequestByUserId(Guid id)
         {
-            var b = _borrowingRequestServices.GetBorrowingRequestById(id);
+            var b = _borrowingRequestServices.GetBorrowingRequestByUserId(id);
             if (b != null)
             {
                 return Ok(b);
@@ -50,35 +52,36 @@ namespace LibraryManager.Controllers
                 return BadRequest("Only borrow maximum 5 books");
             }
             var signal = _borrowingRequestServices.CreateBorrowingRequest(borrowingRequest);
-            if (signal)
+            if (signal=="ok")
             {
                 return Ok();
             }
-            return BadRequest();
+            return BadRequest(signal);
         }
 
 
         [HttpPut]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public ActionResult UpdateBorrowingRequest(BorrowingRequestDto borrowingRequest)
         {
             var signal = _borrowingRequestServices.UpdateBorrowingRequest(borrowingRequest);
-            if (signal)
+            if (signal=="ok")
             {
                 return Ok();
             }
-            return BadRequest();
+            return BadRequest(signal);
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteBorrowingRequest(Guid id)
         {
             var signal = _borrowingRequestServices.DeleteBorrowingRequest(id);
-            if (signal)
+            if (signal=="ok")
             {
                 return Ok();
             }
-            return BadRequest();
+            return BadRequest(signal);
         }
     }
 }

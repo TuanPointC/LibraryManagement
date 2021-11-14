@@ -12,7 +12,7 @@ namespace LibraryManager.Services
         public IEnumerable<CategoryDto> GetCategories();
         public CategoryDto GetCategoryById(Guid id);
         public string CreateCategory(CategoryDto category);
-        public bool UpdateCategory(CategoryDto category);
-        public bool DeleteCategory(Guid id);
+        public string UpdateCategory(CategoryDto category);
+        public string DeleteCategory(Guid id);
     }
 }

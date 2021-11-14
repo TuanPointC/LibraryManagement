@@ -10,9 +10,9 @@ namespace LibraryManager.Services
     {
         public IEnumerable<UserDto> GetUsers();
         public UserDto GetUserById(Guid id);
-        public bool CreateUser(UserDto book);
-        public bool UpdateUser(UserDto book);
-        public bool DeleteUser(Guid id);
+        public string CreateUser(UserDto book);
+        public string UpdateUser(UserDto book);
+        public string DeleteUser(Guid id);
         public UserDto GetUserByNameAndPassword(string name, string password);
     }
 }

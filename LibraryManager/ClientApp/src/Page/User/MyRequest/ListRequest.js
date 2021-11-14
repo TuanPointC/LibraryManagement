@@ -1,35 +1,54 @@
-import { Table, Space, Button } from 'antd';
-import { useState,useEffect } from 'react';
-import { GetRequest } from '../../../Api/RequestApi';
+import { Table, Tag } from 'antd';
+import { useState, useEffect } from 'react';
+import { GetRequestUserId } from '../../../Api/RequestApi';
+const setStatus =(status)=>{
+    if(status==='approve'){
+        return {
+            color:'#87d068',
+            text:'Approve'
+        }
+    }
+    else if(status==="pending"){
+        return {
+            color:'#2db7f5',
+            text:'Pending'
+        }
+    }
+    else{
+        return {
+            color:'#f50',
+            text:'Reject'
+        }
+    }
+}
 const columns = [
     {
-        title: 'Name',
-        dataIndex: 'name',
-        ellipsis: true,
+        title: 'Requesting Date ',
+        dataIndex: 'requestedDate',
     },
     {
-        title: 'Author',
-        dataIndex: 'author',
-        ellipsis: true,
+        title: 'Book',
+        dataIndex: 'bookName',
     },
     {
-        title: "Actions",
-        with: 80,
-        align: 'right',
-        size: "small",
-        render: () => (
-            <Space size="large">
-                <Button type="danger">Delete</Button>
-            </Space>
-        ),
-
+        title: "Status",
+        dataIndex: 'status',
+        render: (status) => (
+            <Tag color={setStatus(status).color}>{setStatus(status).text}</Tag>
+        )
     }
 ];
 const ListRequest = () => {
-    const [requests,setListRequest] = useState([])
-    useEffect(()=>{
+    const [requests, setListRequest] = useState([])
+    useEffect(() => {
+        async function getRequest() {
+            if (localStorage.getItem("userId")) {
+                setListRequest(await GetRequestUserId(localStorage.getItem("userId")))
+            }
+        }
+        getRequest()
+    }, [])
 
-    },[])
     return (
         <div>
             <h1>List Requests</h1>

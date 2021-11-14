@@ -3,19 +3,22 @@ import { Redirect } from 'react-router';
 import { PostLogin } from '../../Api/LoginApi';
 import { useState } from 'react'
 import { success, failed } from '../../component/Message';
-const Login = () => {
+const Login = (props) => {
     const [canAccess, setCanAccess] = useState(false)
 
     const onFinish = async (values) => {
         try {
             const res = await PostLogin(values)
             if (res.status === 200) {
+                props.setUserLogin(true)
                 await success("login")
                 setCanAccess(true)
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('userName', res.data.userName)
                 localStorage.setItem('userId', res.data.userId)
                 localStorage.setItem('userEmail', res.data.userEmail)
+                localStorage.setItem('userRole', res.data.userRole)
+                
             }
         }
         catch {
@@ -27,7 +30,7 @@ const Login = () => {
 
     };
 
-    if (canAccess) {
+    if (canAccess && props.userLogin) {
         return (
             <Redirect to='/' />
         )

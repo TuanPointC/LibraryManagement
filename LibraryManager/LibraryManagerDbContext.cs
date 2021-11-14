@@ -20,6 +20,8 @@ namespace LibraryManager
             modelBuilder.Entity<User>(entity=>
             {
                 entity.HasKey(p => p.Id);
+                entity.HasIndex(p => p.Name).IsUnique();
+                entity.HasIndex(p => p.Email).IsUnique();
                 entity.Property(p => p.Email)
                     .IsRequired()
                     .HasMaxLength(200);
@@ -73,6 +75,7 @@ namespace LibraryManager
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Id).IsRequired();
                 entity.Property(p => p.Name).HasMaxLength(200).IsRequired();
+                entity.HasIndex(p => p.Name).IsUnique();
             });
 
             modelBuilder.Entity<BorrowingRequestDetail>().HasKey(p => new { p.BookId, p.BorrowingRequestId });

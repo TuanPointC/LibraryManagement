@@ -3,12 +3,13 @@ import ListRequest from './ListRequest';
 import { v4 as uuid } from "uuid";
 import { PostRequest } from '../../../Api/RequestApi';
 import { useState } from 'react';
+import { success, failed } from '../../../component/Message';
 
 const MyRequestContainer = (props) => {
     const [indexRow, setIndexRow] = useState(0)
     const deleteHandle = () => {
         var booksRequestClone = props.booksRequest
-        booksRequestClone.splice(indexRow,1)
+        booksRequestClone.splice(indexRow, 1)
         props.setBooksRequest([...booksRequestClone])
     }
     const columns = [
@@ -41,17 +42,23 @@ const MyRequestContainer = (props) => {
             id: uuid(),
             whoRequestId: localStorage.getItem("userId"),
             requestedDate: dateTime,
-            status: 'waiting',
+            status: 'pending',
             listBooks: props.booksRequest
         }
+        var res = await PostRequest(listRequests)
+        if (res.status === 200) {
+            success("Creat borrowing request")
+        }
+        else {
+            failed(res)
+        }
 
-        const res = await PostRequest(listRequests);
-        console.log(res)
     }
+
     return (
         <div>
             <h1>List Temporary requests</h1>
-            <Button type="primary" onClick={BorrowAll}>Borrow All</Button>
+            <Button type="primary" onClick={BorrowAll} disabled={props.booksRequest.length===0}>Borrow All</Button>
             <Table
                 columns={columns}
                 dataSource={props.booksRequest}

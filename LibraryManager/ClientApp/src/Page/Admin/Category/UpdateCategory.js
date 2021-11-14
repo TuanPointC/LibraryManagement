@@ -27,29 +27,25 @@ const UpdateCategory = () => {
     }, [id])
 
     const onFinish = async (values) => {
-        try {
-            const res = await PutCategory({ ...values.category })
-            if (res.status === 200) {
-                await success("Updating")
-                history.push('/admin/category')
-            }
+        const res = await PutCategory({ ...values.category })
+        if (res.status === 200) {
+            await success("Updating category")
+            history.push('/admin/category')
         }
-        catch {
-            failed("Updating")
+        else {
+            failed(res)
         }
 
     };
 
     const onDelete = async () => {
-        try {
-            const res = await DeleteCategoryById(category.id);
-            if (res.status === 200) {
-                await success("Deleting")
-                history.push('/admin/category')
-            }
+        const res = await DeleteCategoryById(category.id);
+        if (res.status === 200) {
+            await success("Deleting Category")
+            history.push('/admin/category')
         }
-        catch {
-            failed("Deleting")
+        else {
+            failed(res)
         }
     }
 

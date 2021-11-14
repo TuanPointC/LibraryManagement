@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { Layout,Button } from 'antd';
+import { Layout, Button } from 'antd';
 import Nav from './Nav/Nav';
 import User from './User/User';
 import Category from './Category/Category';
@@ -8,26 +8,31 @@ import Book from './Book/Book';
 import UpdateUser from "./User/UpdateUser";
 import UpdateCategory from "./Category/UpdateCategory";
 import UpdateBook from "./Book/UpdateBook";
-import { useState } from "react";
-import {  MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { useState, useEffect } from "react";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import NotMatch from "../NotMatch/NotMatch";
-
+import HeaderComponent from '../../component/HeaderComponent'
 const { Footer, Header, Content, Sider } = Layout;
 
-const AdminContainer = () => {
+const AdminContainer = (props) => {
     const [collapsed, setCollapsed] = useState(false)
     const screenHeight = window.innerHeight - 90 - 60;
-    const[canAccess,setCanAccess] =useState(true)
-    if(!canAccess){
-        return(
-            <NotMatch/>
+    const [canAccess, setCanAccess] = useState(false)
+    useEffect(() => {
+        if (localStorage.getItem("userRole") === "admin") {
+            setCanAccess(true)
+        }
+    }, [props.userLogin])
+    if (!canAccess) {
+        return (
+            <NotMatch />
         )
     }
     return (
         <Layout className="layout App">
             <Router>
-                <Header style={{background:'#40A9FF'}}>
-                    This is Header
+                <Header style={{ background: '#40A9FF' }}>
+                    <HeaderComponent setUserLogin={props.setUserLogin}/>
                 </Header>
                 <Layout>
                     <Sider collapsed={collapsed} >
@@ -37,7 +42,7 @@ const AdminContainer = () => {
                         <Nav />
                     </Sider>
 
-                    <Content className="site-layout" style={{ padding: '0 60px', marginTop: 10,minHeight: screenHeight + 'px'  }}>
+                    <Content className="site-layout" style={{ padding: '0 60px', marginTop: 10, minHeight: screenHeight + 'px' }}>
                         <Switch style={{ padding: 24, minHeight: 380 }}>
                             <Route exact path="/admin/">
                                 <Redirect to="/admin/category" />
@@ -64,14 +69,14 @@ const AdminContainer = () => {
                                 <UpdateUser />
                             </Route>
                             <Route>
-                                <NotMatch/>
+                                <NotMatch />
                             </Route>
 
                         </Switch>
                     </Content>
 
                 </Layout>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                <Footer style={{ textAlign: 'center', background: '#40A9FF', zIndex: '1000' }}>Ant Design ©2018 Created by Ant UED</Footer>
             </Router>
         </Layout>
     )
