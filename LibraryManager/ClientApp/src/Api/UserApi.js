@@ -1,5 +1,5 @@
 import axios from "axios"
-const URL = 'https://localhost:44340/api/user'
+const URL =  `${window.location.origin}/api/user`
 //const token = localStorage.getItem('token')
 
 export const GetUsers = () => {

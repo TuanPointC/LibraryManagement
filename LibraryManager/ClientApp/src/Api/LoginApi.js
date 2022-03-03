@@ -1,5 +1,5 @@
 import axios from "axios"
-const URL = 'https://localhost:44340/api/account/login'
+const URL =  `${window.location.origin}/api/account/login`
 
 
 export const PostLogin = async (user) => {

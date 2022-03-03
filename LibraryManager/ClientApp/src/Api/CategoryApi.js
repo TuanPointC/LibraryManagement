@@ -1,5 +1,5 @@
 import axios from "axios"
-const URL = 'https://localhost:44340/api/category'
+const URL =  `${window.location.origin}/api/category`
 
 export const GetCategories = () => {
     const data= axios.get(URL,{headers:{

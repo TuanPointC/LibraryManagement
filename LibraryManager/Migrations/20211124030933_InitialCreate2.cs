@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LibraryManager.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreate2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,10 +62,10 @@ namespace LibraryManager.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WhoRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 11, 13, 15, 44, 3, 990, DateTimeKind.Local).AddTicks(4635)),
-                    HandledDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2021, 11, 24, 10, 9, 32, 814, DateTimeKind.Local).AddTicks(4809)),
+                    HandledDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WhoUpdateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    WhoUpdateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -107,6 +107,11 @@ namespace LibraryManager.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "Name", "Password", "Role" },
+                values: new object[] { new Guid("5d1161f8-3618-4187-9e67-781a8d30140c"), "Tuan@gmail.com", "Tuan", "12345678", "admin" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Books_CategoryId",
                 table: "Books",
@@ -126,6 +131,24 @@ namespace LibraryManager.Migrations
                 name: "IX_BorrowingRequestDetails_BorrowingRequestId",
                 table: "BorrowingRequestDetails",
                 column: "BorrowingRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name",
+                table: "Categories",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Name",
+                table: "Users",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

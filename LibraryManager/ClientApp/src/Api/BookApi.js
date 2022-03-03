@@ -1,5 +1,5 @@
 import axios from "axios"
-const URL = 'https://localhost:44340/api/book'
+const URL =  `${window.location.origin}/api/book`
 
 export const GetBooks = () => {
     const data= axios.get(URL,{headers:{

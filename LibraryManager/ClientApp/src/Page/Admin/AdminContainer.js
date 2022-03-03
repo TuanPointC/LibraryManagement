@@ -76,7 +76,7 @@ const AdminContainer = (props) => {
                     </Content>
 
                 </Layout>
-                <Footer style={{ textAlign: 'center', background: '#40A9FF', zIndex: '1000' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                <Footer style={{ textAlign: 'center', background: '#40A9FF', zIndex: '1000' }}>@2021 Created by Phenikaa_Uchiha</Footer>
             </Router>
         </Layout>
     )

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManager.Migrations
 {
     [DbContext(typeof(LibraryManagerDbContext))]
-    [Migration("20211113100804_InitialCreate2")]
+    [Migration("20211124030933_InitialCreate2")]
     partial class InitialCreate2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,7 +67,7 @@ namespace LibraryManager.Migrations
                     b.Property<DateTime>("RequestedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 13, 17, 8, 4, 15, DateTimeKind.Local).AddTicks(5808));
+                        .HasDefaultValue(new DateTime(2021, 11, 24, 10, 9, 32, 814, DateTimeKind.Local).AddTicks(4809));
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -120,6 +120,9 @@ namespace LibraryManager.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Categories");
                 });
 
@@ -148,7 +151,23 @@ namespace LibraryManager.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5d1161f8-3618-4187-9e67-781a8d30140c"),
+                            Email = "Tuan@gmail.com",
+                            Name = "Tuan",
+                            Password = "12345678",
+                            Role = "admin"
+                        });
                 });
 
             modelBuilder.Entity("LibraryManager.Models.Book", b =>

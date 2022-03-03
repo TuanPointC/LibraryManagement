@@ -1,5 +1,5 @@
 import axios from "axios"
-const URL = 'https://localhost:44340/api/borrowing_request'
+const URL = `${window.location.origin}/api/borrowing_request`
 
 export const GetRequest = () => {
     const data= axios.get(URL,{headers:{

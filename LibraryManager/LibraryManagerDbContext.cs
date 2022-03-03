@@ -19,6 +19,16 @@ namespace LibraryManager
         {
             modelBuilder.Entity<User>(entity=>
             {
+                _ = entity.HasData(
+                    new User
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Tuan",
+                        Email = "Tuan@gmail.com",
+                        Password = "12345678",
+                        Role = "admin"
+                    }
+                );
                 entity.HasKey(p => p.Id);
                 entity.HasIndex(p => p.Name).IsUnique();
                 entity.HasIndex(p => p.Email).IsUnique();
